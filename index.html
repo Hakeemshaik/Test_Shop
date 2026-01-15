@@ -24,7 +24,7 @@
         a { text-decoration: none; color: inherit; cursor: pointer; }
         button { font-family: inherit; border: none; outline: none; background: none; cursor: pointer; }
         ul { list-style: none; }
-        img { max-width: 100%; display: block; object-fit: contain;: cover; }
+        img { max-width: 100%; display: block; object-fit: contain; }
 
         /* --- UTILITY --- */
         .container { max-width: 1440px; margin: 0 auto; padding: 0 24px; }
@@ -75,7 +75,7 @@
         .modal-content { background: white; width: 90%; max-width: 1000px; height: 80vh; display: flex; overflow: hidden; border-radius: 8px; position: relative; }
         .close-modal { position: absolute; top: 20px; right: 20px; font-size: 30px; cursor: pointer; z-index: 10; background: white; border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; }
         .modal-img { flex: 1; background: #f5f5f5; }
-        .modal-img img { width: 100%; height: 100%; object-fit: contain;: contain; }
+        .modal-img img { width: 100%; height: 100%; object-fit: contain; }
         .modal-details { flex: 1; padding: 60px; display: flex; flex-direction: column; justify-content: center; }
         .modal-price { font-size: 24px; font-weight: 700; margin-bottom: 30px; }
 
@@ -205,7 +205,7 @@
                 <div class="card" onclick="openProduct('${p.id}')">
                     <div class="card-img-wrap">
                         ${p.badge ? `<span class="badge">${p.badge}</span>` : ''}
-                        <img src="${p.img}" style="width:100%; height:100%; object-fit: contain;:cover;">
+                        <img src="${p.img}" style="width:100%; height:100%; object-fit: contain;">
                     </div>
                     <h3 style="font-size: 16px; font-weight: 700;">${p.name}</h3>
                     <p style="color: #777; font-size: 14px;">${p.desc}</p>
