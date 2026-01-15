@@ -15,7 +15,6 @@
   <link rel="stylesheet" href="https://cdn.snipcart.com/themes/v3.3.1/default/snipcart.css" />
   <script async src="https://cdn.snipcart.com/themes/v3.3.1/default/snipcart.js"></script>
 
-  <!-- CSS -->
   <style>
     * { box-sizing: border-box; margin:0; padding:0; }
     body { font-family:'Roboto', sans-serif; background:#f5f5f5; color:#333; scroll-behavior: smooth; }
@@ -61,15 +60,23 @@
       justify-items: center;
     }
     .product { 
-      background:white; border-radius:15px; text-align:center; padding:20px; 
-      box-shadow:0 8px 20px rgba(0,0,0,0.1); transition: transform 0.3s, box-shadow 0.3s; 
+      background:white; 
+      border-radius:15px; 
+      text-align:center; 
+      padding:20px; 
+      box-shadow:0 8px 20px rgba(0,0,0,0.1); 
+      transition: transform 0.3s, box-shadow 0.3s; 
       width:100%;
       max-width:300px;
+      display:flex;
+      flex-direction: column;
+      align-items: center;
     }
     .product:hover { transform: translateY(-5px); box-shadow:0 12px 25px rgba(0,0,0,0.15); }
-    .product img { width:100%; border-radius:10px; margin-bottom:15px; }
-    .product h2 { font-size:1.2em; margin-bottom:10px; }
-    .product p { font-size:1em; margin-bottom:15px; font-weight:700; color:#1e1e1e; }
+    .product img { width:100%; border-radius:10px; margin-bottom:15px; object-fit:cover; }
+    .product h2 { font-size:1.2em; margin-bottom:10px; text-align:center; }
+    .product p { font-size:0.95em; margin-bottom:15px; font-weight:500; color:#555; text-align:center; }
+    .product .price { font-size:1em; font-weight:700; color:#1e1e1e; margin-bottom:10px; }
     .product button { padding:10px 25px; background:#28a745; color:white; border:none; border-radius:5px; cursor:pointer; font-weight:600; transition: background 0.3s; }
     .product button:hover { background:#218838; }
 
@@ -126,47 +133,58 @@
 
   <!-- Shop Section -->
   <section id="shop" class="shop">
+
+    <!-- Product 1 -->
     <div class="product">
-      <img src="assets/img1.png" alt="nike mind 001 Grey">
-      <h2>Product 1</h2>
-      <p>$19.99</p>
+      <img src="assets/img1.png" alt="Nike Mind 1">
+      <h2>Nike Mind Runner</h2>
+      <p>Experience ultimate comfort and style with the Nike Mind Runner – designed for peak performance.</p>
+      <div class="price">$19.99</div>
       <button class="snipcart-add-item"
-              data-item-id="product1"
+              data-item-id="nike-mind-1"
               data-item-price="19.99"
               data-item-url="."
-              data-item-name="nike mind 001 Grey"
-              data-item-description="This is product 1 description.">
+              data-item-name="Nike Mind Runner"
+              data-item-description="Experience ultimate comfort and style with the Nike Mind Runner – designed for peak performance."
+              data-item-image="assets/img1.png">
         <i class="fas fa-shopping-cart"></i> Add to Cart
       </button>
     </div>
 
+    <!-- Product 2 -->
     <div class="product">
-      <img src="assets/img2.png" alt=nike mind 001 Red">
-      <h2>Product 2</h2>
-      <p>$29.99</p>
+      <img src="assets/img2.png" alt="Nike Mind 2">
+      <h2>Nike Mind Air</h2>
+      <p>Step into the future with Nike Mind Air – lightweight, breathable, and built for champions.</p>
+      <div class="price">$29.99</div>
       <button class="snipcart-add-item"
-              data-item-id="nike mind 001 Red"
+              data-item-id="nike-mind-2"
               data-item-price="29.99"
               data-item-url="."
-              data-item-name="nike mind 001 Red"
-              data-item-description="This is product 2 description.">
+              data-item-name="Nike Mind Air"
+              data-item-description="Step into the future with Nike Mind Air – lightweight, breathable, and built for champions."
+              data-item-image="assets/img2.png">
         <i class="fas fa-shopping-cart"></i> Add to Cart
       </button>
     </div>
 
+    <!-- Product 3 -->
     <div class="product">
-      <img src="assets/img3.png" alt=nike mind 001 Black">
-      <h2>Product 3</h2>
-      <p>$39.99</p>
+      <img src="assets/img3.png" alt="Nike Mind 3">
+      <h2>Nike Mind Zoom</h2>
+      <p>Push your limits with Nike Mind Zoom – engineered for speed, comfort, and style on every run.</p>
+      <div class="price">$39.99</div>
       <button class="snipcart-add-item"
-              data-item-id="nike mind 001 Black"
+              data-item-id="nike-mind-3"
               data-item-price="39.99"
               data-item-url="."
-              data-item-name="nike mind 001 Black"
-              data-item-description="This is product 3 description.">
+              data-item-name="Nike Mind Zoom"
+              data-item-description="Push your limits with Nike Mind Zoom – engineered for speed, comfort, and style on every run."
+              data-item-image="assets/img3.png">
         <i class="fas fa-shopping-cart"></i> Add to Cart
       </button>
     </div>
+
   </section>
 
   <!-- About Section -->
@@ -193,10 +211,5 @@
   <!-- Snipcart container -->
   <div hidden id="snipcart" data-api-key="YmZhZGExNjMtMjRkYS00MGViLTk2YjgtMzBlZjcxNWY5ZjVmNjM5MDQwNzAzMTc4MTU1MDg3"></div>
 
-  <!-- JS -->
-  <script>
-    console.log("Hakeem's Shop loaded!");
-  </script>
 </body>
 </html>
-
