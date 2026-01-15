@@ -19,12 +19,12 @@
     * { box-sizing: border-box; margin:0; padding:0; }
     body { font-family:'Roboto', sans-serif; background:#f5f5f5; color:#333; scroll-behavior: smooth; }
 
-    /* Header & Navigation */
-    header { background:#1e1e1e; color:white; padding:15px 0; position:sticky; top:0; z-index:1000; display:flex; justify-content:center; align-items:center; }
-    header h1 { font-size:2em; margin-right:40px; }
-    nav { text-align:center; }
-    nav a { color:white; margin:0 15px; text-decoration:none; font-weight:500; transition: color 0.3s; }
-    nav a:hover { color:#ffdd57; }
+    /* Header */
+    header { background:#1e1e1e; color:white; padding:15px 0; position:sticky; top:0; z-index:1000; display:flex; justify-content:center; align-items:center; box-shadow:0 2px 10px rgba(0,0,0,0.2); }
+    header h1 { font-size:2em; margin-right:40px; transition: transform 0.3s; }
+    header h1:hover { transform: scale(1.05); }
+    nav a { color:white; margin:0 15px; text-decoration:none; font-weight:500; transition: color 0.3s, transform 0.3s; }
+    nav a:hover { color:#ffdd57; transform: scale(1.05); }
 
     /* Floating cart button */
     #cart-btn {
@@ -42,13 +42,13 @@
       align-items:center;
       gap:5px;
       box-shadow:0 4px 10px rgba(0,0,0,0.2);
-      transition: background 0.3s;
+      transition: background 0.3s, transform 0.3s;
     }
-    #cart-btn:hover { background:#ffc107; }
+    #cart-btn:hover { background:#ffc107; transform: scale(1.05); }
 
     /* Sections */
-    section { padding:60px 20px; max-width:1200px; margin:0 auto; }
-    #home { text-align:center; padding-top:100px; padding-bottom:100px; background:#fdfdfd; }
+    section { padding:60px 20px; max-width:1200px; margin:0 auto; opacity:0; transform: translateY(20px); animation: fadeIn 1s forwards; }
+    #home { text-align:center; padding-top:100px; padding-bottom:100px; background:#fdfdfd; animation-delay:0.2s; }
     #home h2 { font-size:2.5em; margin-bottom:20px; }
     #home p { font-size:1.2em; color:#555; }
 
@@ -59,36 +59,32 @@
       gap:30px;
       justify-items: center;
     }
-    .product { 
+    .product {
       background:white; 
       border-radius:15px; 
       text-align:center; 
       padding:20px; 
       box-shadow:0 8px 20px rgba(0,0,0,0.1); 
-      transition: transform 0.3s, box-shadow 0.3s; 
+      transition: transform 0.3s, box-shadow 0.3s;
       width:100%;
       max-width:300px;
       display:flex;
       flex-direction: column;
       align-items: center;
+      min-height: 450px; /* same height for all products */
     }
-    .product:hover { transform: translateY(-5px); box-shadow:0 12px 25px rgba(0,0,0,0.15); }
-    .product img { width:100%; border-radius:10px; margin-bottom:15px; object-fit:cover; }
+    .product:hover { transform: translateY(-10px) scale(1.03); box-shadow:0 15px 30px rgba(0,0,0,0.2); }
+    .product img { width:100%; height:180px; object-fit:cover; border-radius:10px; margin-bottom:15px; }
     .product h2 { font-size:1.2em; margin-bottom:10px; text-align:center; }
-    .product p { font-size:0.95em; margin-bottom:15px; font-weight:500; color:#555; text-align:center; }
-    .product .price { font-size:1em; font-weight:700; color:#1e1e1e; margin-bottom:10px; }
-    .product button { padding:10px 25px; background:#28a745; color:white; border:none; border-radius:5px; cursor:pointer; font-weight:600; transition: background 0.3s; }
-    .product button:hover { background:#218838; }
+    .product p { font-size:0.95em; margin-bottom:10px; font-weight:500; color:#555; text-align:center; }
+    .product .price { font-size:1em; font-weight:700; color:#1e1e1e; margin-bottom:15px; }
+    .product button { padding:10px 25px; background:#28a745; color:white; border:none; border-radius:5px; cursor:pointer; font-weight:600; transition: background 0.3s, transform 0.3s; }
+    .product button:hover { background:#218838; transform: scale(1.05); }
 
-    /* About Section */
-    #about { background:#fdfdfd; text-align:center; }
-    #about h2 { font-size:2em; margin-bottom:20px; }
-    #about p { font-size:1.1em; color:#555; max-width:800px; margin:0 auto; }
-
-    /* Contact Section */
-    #contact { background:#fdfdfd; text-align:center; }
-    #contact h2 { font-size:2em; margin-bottom:20px; }
-    #contact p { font-size:1.1em; color:#555; margin-bottom:10px; }
+    /* About & Contact */
+    #about, #contact { background:#fdfdfd; text-align:center; }
+    #about h2, #contact h2 { font-size:2em; margin-bottom:20px; }
+    #about p, #contact p { font-size:1.1em; color:#555; max-width:800px; margin:0 auto; }
 
     /* Footer */
     footer { background:#1e1e1e; color:white; text-align:center; padding:20px; margin-top:30px; }
@@ -96,14 +92,17 @@
     footer a:hover { text-decoration:underline; }
 
     /* Responsive */
-    @media(max-width:900px){
-      .shop { grid-template-columns: repeat(2, 1fr); }
-    }
+    @media(max-width:900px){ .shop { grid-template-columns: repeat(2, 1fr); } }
     @media(max-width:600px){
       header h1 { font-size:1.5em; margin-right:10px; }
       nav a { display:block; margin:5px 0; }
       .shop { grid-template-columns: 1fr; gap:20px; }
       #cart-btn { padding:8px 12px; font-size:0.9em; }
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      to { opacity:1; transform: translateY(0); }
     }
   </style>
 </head>
@@ -128,15 +127,14 @@
   <!-- Home Section -->
   <section id="home">
     <h2>Welcome to Hakeem's Shop</h2>
-    <p>Discover amazing products, hand-picked just for you. Shop easily and securely with our integrated checkout.</p>
+    <p>Discover amazing Nike Mind products. Shop securely with our integrated checkout and enjoy premium style and performance.</p>
   </section>
 
   <!-- Shop Section -->
   <section id="shop" class="shop">
-
     <!-- Product 1 -->
     <div class="product">
-      <img src="assets/img1.png" alt="Nike Mind 1">
+      <img src="assets/img1.png" alt="Nike Mind Runner">
       <h2>Nike Mind Runner</h2>
       <p>Experience ultimate comfort and style with the Nike Mind Runner – designed for peak performance.</p>
       <div class="price">$19.99</div>
@@ -153,7 +151,7 @@
 
     <!-- Product 2 -->
     <div class="product">
-      <img src="assets/img2.png" alt="Nike Mind 2">
+      <img src="assets/img2.png" alt="Nike Mind Air">
       <h2>Nike Mind Air</h2>
       <p>Step into the future with Nike Mind Air – lightweight, breathable, and built for champions.</p>
       <div class="price">$29.99</div>
@@ -170,7 +168,7 @@
 
     <!-- Product 3 -->
     <div class="product">
-      <img src="assets/img3.png" alt="Nike Mind 3">
+      <img src="assets/img3.png" alt="Nike Mind Zoom">
       <h2>Nike Mind Zoom</h2>
       <p>Push your limits with Nike Mind Zoom – engineered for speed, comfort, and style on every run.</p>
       <div class="price">$39.99</div>
@@ -184,13 +182,12 @@
         <i class="fas fa-shopping-cart"></i> Add to Cart
       </button>
     </div>
-
   </section>
 
   <!-- About Section -->
   <section id="about">
     <h2>About Us</h2>
-    <p>Hakeem's Shop is dedicated to providing high-quality products with exceptional customer service. Our goal is to make shopping online simple, safe, and enjoyable for everyone.</p>
+    <p>Hakeem's Shop is dedicated to providing high-quality Nike Mind products with exceptional customer service. Our goal is to make online shopping simple, safe, and enjoyable for everyone.</p>
   </section>
 
   <!-- Contact Section -->
@@ -209,7 +206,7 @@
   </footer>
 
   <!-- Snipcart container -->
-  <div hidden id="snipcart" data-api-key="YmZhZGExNjMtMjRkYS00MGViLTk2YjgtMzBlZjcxNWY5ZjVmNjM5MDQwNzAzMTc4MTU1MDg3"></div>
+  <div hidden id="snipcart" data-api-key="YOUR_SNIPCART_PUBLIC_API_KEY"></div>
 
 </body>
 </html>
