@@ -500,7 +500,7 @@
     <!-- SNIPCART SCRIPT CONFIGURATION -->
     <script>
         window.SnipcartSettings = {
-            publicApiKey: 'YOUR_SNIPCART_PUBLIC_KEY_HERE', 
+            publicApiKey: 'YmZhZGExNjMtMjRkYS00MGViLTk2YjgtMzBlZjcxNWY5ZjVmNjM5MDQwNzAzMTc4MTU1MDg3', 
             loadStrategy: 'manual',
             modalStyle: 'side'
         };
@@ -653,7 +653,7 @@
         modal.addEventListener('click', (e) => { if(e.target === modal) closeModal(); });
 
         document.getElementById('addToBagBtn').addEventListener('click', () => {
-            if (window.SnipcartSettings.publicApiKey.includes('YOUR_SNIPCART_PUBLIC_KEY_HERE')) {
+            if (window.SnipcartSettings.publicApiKey.includes('YmZhZGExNjMtMjRkYS00MGViLTk2YjgtMzBlZjcxNWY5ZjVmNjM5MDQwNzAzMTc4MTU1MDg3')) {
                 alert("Cannot add to cart: Missing API Key.");
                 return;
             }
