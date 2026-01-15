@@ -16,14 +16,15 @@
 <script async src="https://cdn.snipcart.com/themes/v3.3.1/default/snipcart.js"></script>
 
 <style>
+/* --- GENERAL --- */
 *{box-sizing:border-box;margin:0;padding:0;}
 body{
   font-family:'Roboto', sans-serif;
   color:#333;
   scroll-behavior:smooth;
-  background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #a1c4fd, #c2e9fb);
+  background:linear-gradient(-45deg,#111,#333,#555,#111);
   background-size:400% 400%;
-  animation:gradientBG 15s ease infinite;
+  animation:gradientBG 20s ease infinite;
   overflow-x:hidden;
 }
 @keyframes gradientBG{
@@ -32,9 +33,9 @@ body{
   100%{background-position:0% 50%;}
 }
 
-/* Header */
+/* --- HEADER --- */
 header{
-  background: rgba(30,30,30,0.9);
+  background: rgba(30,30,30,0.95);
   color:white;
   padding:15px 20px;
   position:sticky;
@@ -44,7 +45,6 @@ header{
   justify-content:space-between;
   align-items:center;
   box-shadow:0 2px 10px rgba(0,0,0,0.3);
-  backdrop-filter: blur(10px);
 }
 header h1{
   font-family:'Montserrat', sans-serif;
@@ -61,7 +61,7 @@ nav a{
 }
 nav a:hover{ color:#ffdd57; transform: scale(1.05); }
 
-/* Floating Cart Button */
+/* --- FLOATING CART BUTTON --- */
 #cart-btn{
   position:fixed;
   top:20px;
@@ -81,24 +81,29 @@ nav a:hover{ color:#ffdd57; transform: scale(1.05); }
 }
 #cart-btn:hover{ background:#ffc107; transform: scale(1.05); }
 
-/* Side Menu */
+/* --- SIDE MENU --- */
 #sideMenu{
   position:fixed;
   top:0;
-  left:-250px; /* hidden by default */
-  width:250px;
+  left:-300px;
+  width:300px;
   height:100%;
-  background:rgba(255,255,255,0.95);
+  background: #fff;
   padding:20px;
-  box-shadow: 2px 0 15px rgba(0,0,0,0.3);
-  transition: left 0.3s ease;
+  box-shadow: 2px 0 20px rgba(0,0,0,0.3);
+  transition: left 0.4s ease;
   z-index:1002;
   overflow-y:auto;
 }
-#sideMenu h3{ font-weight:700; margin-bottom:15px; color:#1e1e1e; font-size:1.2em; }
+#sideMenu h3{
+  font-weight:700; 
+  margin-bottom:20px; 
+  color:#1e1e1e;
+  font-size:1.3em;
+}
 #sideMenu a{
   display:block;
-  margin-bottom:15px;
+  margin-bottom:20px;
   color:#1e1e1e;
   text-decoration:none;
   font-weight:500;
@@ -106,14 +111,7 @@ nav a:hover{ color:#ffdd57; transform: scale(1.05); }
 }
 #sideMenu a:hover{ color:#ffdd57; }
 
-/* Side menu button */
-#menuBtn{
-  font-size:1.5em;
-  color:white;
-  cursor:pointer;
-}
-
-/* Overlay when menu open */
+/* --- OVERLAY --- */
 #overlay{
   position:fixed;
   top:0;
@@ -123,48 +121,84 @@ nav a:hover{ color:#ffdd57; transform: scale(1.05); }
   background: rgba(0,0,0,0.5);
   z-index:1001;
   opacity:0;
-  transition: opacity 0.3s, width 0s 0.3s;
+  transition: opacity 0.4s, width 0s 0.4s;
 }
 
-/* Sections */
-section{ padding:60px 20px; max-width:1200px; margin:0 auto; opacity:0; transform: translateY(30px); animation:fadeUp 1s forwards; }
-#home{text-align:center; padding-top:80px; padding-bottom:80px; animation-delay:0.2s;}
-#home h2{font-size:2.5em;margin-bottom:20px;color:#fff;text-shadow:1px 1px 5px rgba(0,0,0,0.3);}
-#home p{font-size:1.2em;color:#eee;}
-
+/* --- SECTIONS --- */
+section{
+  padding:60px 20px;
+  max-width:1200px;
+  margin:0 auto;
+  opacity:0;
+  transform: translateY(30px);
+  animation:fadeUp 1s forwards;
+}
 @keyframes fadeUp{ to{opacity:1; transform:translateY(0);} }
 
-/* Shop Grid */
+/* --- HOME --- */
+#home{text-align:center; padding-top:80px; padding-bottom:80px; animation-delay:0.2s;}
+#home h2{
+  font-size:3em;
+  margin-bottom:20px;
+  color:#fff;
+  text-shadow:2px 2px 10px rgba(0,0,0,0.5);
+}
+#home p{
+  font-size:1.3em;
+  color:#eee;
+}
+
+/* --- SHOP GRID --- */
 .shop{
   display:grid;
   grid-template-columns:repeat(3,1fr);
   gap:30px;
+  margin-bottom:60px;
 }
 .product{
   background:white;
   border-radius:15px;
   text-align:center;
-  padding:20px;
-  box-shadow:0 8px 20px rgba(0,0,0,0.15);
-  transition: transform 0.4s, box-shadow 0.4s;
+  padding:15px;
+  box-shadow:0 8px 30px rgba(0,0,0,0.15);
+  transition: transform 0.5s, box-shadow 0.5s;
   width:100%;
   display:flex;
   flex-direction:column;
   align-items:center;
-  min-height:470px;
+  min-height:500px;
+  position:relative;
+  overflow:hidden;
 }
-.product:hover{ transform:translateY(-10px) scale(1.05); box-shadow:0 20px 40px rgba(0,0,0,0.25); }
-.product img{ width:100%; height:180px; object-fit:cover; border-radius:10px; margin-bottom:15px; transition: transform 0.4s; }
+.product img{
+  width:100%;
+  height:220px;
+  object-fit:cover;
+  border-radius:10px;
+  transition: transform 0.5s;
+}
 .product:hover img{ transform:scale(1.1); }
-.product h2{ font-size:1.2em;margin-bottom:10px; }
-.product p{ font-size:0.95em;margin-bottom:10px;font-weight:500;color:#555; }
-.product .price{ font-size:1.1em;font-weight:700;color:#1e1e1e;margin-bottom:15px; }
-.product button{ padding:10px 25px; background:#28a745; color:white; border:none; border-radius:5px; cursor:pointer; font-weight:600; transition: background 0.3s, transform 0.3s; }
-.product button:hover{ background:#218838; transform: scale(1.05); }
+.product h2{ font-size:1.3em;margin:10px 0; }
+.product p{ font-size:1em;color:#555;margin-bottom:10px; }
+.product .price{ font-size:1.1em;font-weight:700;color:#1e1e1e;margin-bottom:10px; }
+.product button{
+  padding:10px 20px; 
+  background:#ffdd57; 
+  color:#1e1e1e; 
+  border:none; 
+  border-radius:5px;
+  font-weight:600;
+  cursor:pointer;
+  transition: transform 0.3s, background 0.3s;
+  opacity:0;
+  position:absolute;
+  bottom:20px;
+}
+.product:hover button{ opacity:1; transform: scale(1.05); }
 
-/* About & Contact */
-#about, #contact{
-  background: rgba(255,255,255,0.9);
+/* --- ABOUT & CONTACT --- */
+#about,#contact{
+  background: rgba(255,255,255,0.95);
   border-radius:15px;
   padding:40px;
   box-shadow:0 8px 30px rgba(0,0,0,0.2);
@@ -173,12 +207,12 @@ section{ padding:60px 20px; max-width:1200px; margin:0 auto; opacity:0; transfor
 #about h2,#contact h2{font-size:2em;margin-bottom:20px;}
 #about p,#contact p{font-size:1.1em;color:#333; max-width:100%; margin:0 auto;}
 
-/* Footer */
+/* --- FOOTER --- */
 footer{ background:#1e1e1e; color:white; text-align:center; padding:20px; }
 footer a{ color:#ffdd57; text-decoration:none; margin:0 10px; }
 footer a:hover{ text-decoration:underline; }
 
-/* Responsive */
+/* --- RESPONSIVE --- */
 @media(max-width:900px){ .shop{ grid-template-columns:repeat(2,1fr); } }
 @media(max-width:600px){
   header h1{ font-size:1.5em; }
@@ -189,7 +223,7 @@ footer a:hover{ text-decoration:underline; }
 </head>
 <body>
 
-<!-- Side Menu -->
+<!-- SIDE MENU -->
 <div id="sideMenu">
   <h3>Categories</h3>
   <a href="#" data-category="all">All</a>
@@ -199,7 +233,7 @@ footer a:hover{ text-decoration:underline; }
 </div>
 <div id="overlay"></div>
 
-<!-- Header -->
+<!-- HEADER -->
 <header>
   <div id="menuBtn"><i class="fas fa-bars"></i></div>
   <h1>Hakeem's Shop</h1>
@@ -211,18 +245,18 @@ footer a:hover{ text-decoration:underline; }
   </nav>
 </header>
 
-<!-- Floating Cart Button -->
+<!-- CART BUTTON -->
 <div id="cart-btn" class="snipcart-checkout">
   <i class="fas fa-shopping-cart"></i> <span class="snipcart-total-items"></span>
 </div>
 
-<!-- Home Section -->
+<!-- HOME SECTION -->
 <section id="home">
   <h2>Welcome to Hakeem's Shop</h2>
-  <p>Discover amazing Nike Mind products. Shop securely with our integrated checkout and enjoy premium style and performance.</p>
+  <p>Premium Nike Mind products. Secure checkout & stylish performance gear.</p>
 </section>
 
-<!-- Shop Section -->
+<!-- SHOP SECTION -->
 <section id="shop" class="shop">
   <div class="product" data-category="shoes">
     <img src="assets/img1.png" alt="Nike Mind Runner">
@@ -230,56 +264,54 @@ footer a:hover{ text-decoration:underline; }
     <p>Ultimate comfort and style for peak performance.</p>
     <div class="price">$19.99</div>
     <button class="snipcart-add-item"
-            data-item-id="nike-mind-1"
-            data-item-price="19.99"
-            data-item-url="."
-            data-item-name="Nike Mind Runner"
-            data-item-description="Ultimate comfort and style for peak performance."
-            data-item-image="assets/img1.png">
+      data-item-id="nike-mind-1"
+      data-item-price="19.99"
+      data-item-url="."
+      data-item-name="Nike Mind Runner"
+      data-item-description="Ultimate comfort and style for peak performance."
+      data-item-image="assets/img1.png">
       <i class="fas fa-shopping-cart"></i> Add to Cart
     </button>
   </div>
-
   <div class="product" data-category="clothing">
     <img src="assets/img2.png" alt="Nike Mind Air">
     <h2>Nike Mind Air</h2>
-    <p>Lightweight, breathable, and built for champions.</p>
+    <p>Lightweight, breathable, built for champions.</p>
     <div class="price">$29.99</div>
     <button class="snipcart-add-item"
-            data-item-id="nike-mind-2"
-            data-item-price="29.99"
-            data-item-url="."
-            data-item-name="Nike Mind Air"
-            data-item-description="Lightweight, breathable, and built for champions."
-            data-item-image="assets/img2.png">
+      data-item-id="nike-mind-2"
+      data-item-price="29.99"
+      data-item-url="."
+      data-item-name="Nike Mind Air"
+      data-item-description="Lightweight, breathable, built for champions."
+      data-item-image="assets/img2.png">
       <i class="fas fa-shopping-cart"></i> Add to Cart
     </button>
   </div>
-
   <div class="product" data-category="pants">
     <img src="assets/img3.png" alt="Nike Mind Zoom">
     <h2>Nike Mind Zoom</h2>
     <p>Engineered for speed, comfort, and style.</p>
     <div class="price">$39.99</div>
     <button class="snipcart-add-item"
-            data-item-id="nike-mind-3"
-            data-item-price="39.99"
-            data-item-url="."
-            data-item-name="Nike Mind Zoom"
-            data-item-description="Engineered for speed, comfort, and style."
-            data-item-image="assets/img3.png">
+      data-item-id="nike-mind-3"
+      data-item-price="39.99"
+      data-item-url="."
+      data-item-name="Nike Mind Zoom"
+      data-item-description="Engineered for speed, comfort, and style."
+      data-item-image="assets/img3.png">
       <i class="fas fa-shopping-cart"></i> Add to Cart
     </button>
   </div>
 </section>
 
-<!-- About Section -->
+<!-- ABOUT -->
 <section id="about">
   <h2>About Us</h2>
-  <p>Hakeem's Shop provides premium Nike Mind products with exceptional customer service. Our goal is to make online shopping secure, easy, and enjoyable for everyone.</p>
+  <p>Hakeem's Shop delivers premium Nike Mind products with outstanding service. Secure and stylish online shopping experience.</p>
 </section>
 
-<!-- Contact Section -->
+<!-- CONTACT -->
 <section id="contact">
   <h2>Contact Us</h2>
   <p>Email: support@hakeemshop.com</p>
@@ -287,14 +319,14 @@ footer a:hover{ text-decoration:underline; }
   <p>Follow us on social media for updates and promotions.</p>
 </section>
 
-<!-- Footer -->
+<!-- FOOTER -->
 <footer>
   &copy; 2026 Hakeem's Shop. Follow us on
   <a href="#"><i class="fab fa-instagram"></i> Instagram</a>,
   <a href="#"><i class="fab fa-twitter"></i> Twitter</a>
 </footer>
 
-<!-- Snipcart container -->
+<!-- SNIPCART -->
 <div hidden id="snipcart" data-api-key="YOUR_SNIPCART_PUBLIC_API_KEY"></div>
 
 <script>
@@ -302,34 +334,45 @@ footer a:hover{ text-decoration:underline; }
 const sideMenu = document.getElementById('sideMenu');
 const overlay = document.getElementById('overlay');
 const menuBtn = document.getElementById('menuBtn');
-menuBtn.addEventListener('click', () => {
-  sideMenu.style.left = '0';
-  overlay.style.width = '100%';
-  overlay.style.opacity = '1';
+
+menuBtn.addEventListener('click', ()=>{
+  sideMenu.style.left='0';
+  overlay.style.width='100%';
+  overlay.style.opacity='1';
 });
-overlay.addEventListener('click', () => {
-  sideMenu.style.left = '-250px';
-  overlay.style.opacity = '0';
-  overlay.style.width = '0';
+overlay.addEventListener('click', ()=>{
+  sideMenu.style.left='-300px';
+  overlay.style.opacity='0';
+  overlay.style.width='0';
 });
 
-// Product filtering
+// Category filter
 const categoryLinks = sideMenu.querySelectorAll('a[data-category]');
 const products = document.querySelectorAll('.product');
-categoryLinks.forEach(link => {
-  link.addEventListener('click', (e)=>{
+
+categoryLinks.forEach(link=>{
+  link.addEventListener('click', e=>{
     e.preventDefault();
     const category = link.getAttribute('data-category');
     products.forEach(p=>{
-      if(category==='all') p.style.display='flex';
-      else p.style.display = (p.dataset.category === category) ? 'flex' : 'none';
+      if(category==='all') {
+        p.style.display='flex';
+        p.style.opacity='1';
+        p.style.transform='translateY(0)';
+      } else if(p.dataset.category===category){
+        p.style.display='flex';
+        p.style.opacity='1';
+        p.style.transform='translateY(0)';
+      } else{
+        p.style.display='none';
+      }
     });
-    sideMenu.style.left = '-250px';
-    overlay.style.opacity = '0';
-    overlay.style.width = '0';
+    // Close menu after selection
+    sideMenu.style.left='-300px';
+    overlay.style.opacity='0';
+    overlay.style.width='0';
   });
 });
 </script>
-
 </body>
 </html>
