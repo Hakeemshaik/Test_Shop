@@ -17,10 +17,17 @@
 
   <style>
     * { box-sizing: border-box; margin:0; padding:0; }
-    body { font-family:'Roboto', sans-serif; background:#f5f5f5; color:#333; scroll-behavior: smooth; }
+    body { font-family:'Roboto', sans-serif; color:#333; scroll-behavior: smooth; background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #a1c4fd, #c2e9fb); background-size: 400% 400%; animation: gradientBG 15s ease infinite; }
+
+    /* Animated gradient background */
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
 
     /* Header */
-    header { background:#1e1e1e; color:white; padding:15px 0; position:sticky; top:0; z-index:1000; display:flex; justify-content:center; align-items:center; box-shadow:0 2px 10px rgba(0,0,0,0.2); }
+    header { background: rgba(30,30,30,0.9); color:white; padding:15px 0; position:sticky; top:0; z-index:1000; display:flex; justify-content:center; align-items:center; box-shadow:0 2px 10px rgba(0,0,0,0.3); backdrop-filter: blur(10px); transition: all 0.3s; }
     header h1 { font-size:2em; margin-right:40px; transition: transform 0.3s; }
     header h1:hover { transform: scale(1.05); }
     nav a { color:white; margin:0 15px; text-decoration:none; font-weight:500; transition: color 0.3s, transform 0.3s; }
@@ -47,10 +54,14 @@
     #cart-btn:hover { background:#ffc107; transform: scale(1.05); }
 
     /* Sections */
-    section { padding:60px 20px; max-width:1200px; margin:0 auto; opacity:0; transform: translateY(20px); animation: fadeIn 1s forwards; }
-    #home { text-align:center; padding-top:100px; padding-bottom:100px; background:#fdfdfd; animation-delay:0.2s; }
-    #home h2 { font-size:2.5em; margin-bottom:20px; }
-    #home p { font-size:1.2em; color:#555; }
+    section { padding:60px 20px; max-width:1200px; margin:0 auto; opacity:0; transform: translateY(30px); animation: fadeUp 1s forwards; }
+    #home { text-align:center; padding-top:100px; padding-bottom:100px; animation-delay:0.2s; }
+    #home h2 { font-size:2.5em; margin-bottom:20px; color:#fff; text-shadow:1px 1px 5px rgba(0,0,0,0.3);}
+    #home p { font-size:1.2em; color:#eee; }
+
+    @keyframes fadeUp {
+      to { opacity:1; transform: translateY(0); }
+    }
 
     /* Shop Grid */
     .shop {
@@ -64,27 +75,29 @@
       border-radius:15px; 
       text-align:center; 
       padding:20px; 
-      box-shadow:0 8px 20px rgba(0,0,0,0.1); 
-      transition: transform 0.3s, box-shadow 0.3s;
+      box-shadow:0 8px 20px rgba(0,0,0,0.15); 
+      transition: transform 0.4s, box-shadow 0.4s;
       width:100%;
       max-width:300px;
       display:flex;
       flex-direction: column;
       align-items: center;
-      min-height: 450px; /* same height for all products */
+      min-height: 470px; /* uniform height */
+      overflow: hidden;
     }
-    .product:hover { transform: translateY(-10px) scale(1.03); box-shadow:0 15px 30px rgba(0,0,0,0.2); }
-    .product img { width:100%; height:180px; object-fit:cover; border-radius:10px; margin-bottom:15px; }
-    .product h2 { font-size:1.2em; margin-bottom:10px; text-align:center; }
-    .product p { font-size:0.95em; margin-bottom:10px; font-weight:500; color:#555; text-align:center; }
-    .product .price { font-size:1em; font-weight:700; color:#1e1e1e; margin-bottom:15px; }
+    .product:hover { transform: translateY(-10px) scale(1.05); box-shadow:0 20px 40px rgba(0,0,0,0.25); }
+    .product img { width:100%; height:180px; object-fit:cover; border-radius:10px; margin-bottom:15px; transition: transform 0.4s; }
+    .product:hover img { transform: scale(1.1); }
+    .product h2 { font-size:1.2em; margin-bottom:10px; }
+    .product p { font-size:0.95em; margin-bottom:10px; font-weight:500; color:#555; }
+    .product .price { font-size:1.1em; font-weight:700; color:#1e1e1e; margin-bottom:15px; }
     .product button { padding:10px 25px; background:#28a745; color:white; border:none; border-radius:5px; cursor:pointer; font-weight:600; transition: background 0.3s, transform 0.3s; }
     .product button:hover { background:#218838; transform: scale(1.05); }
 
     /* About & Contact */
-    #about, #contact { background:#fdfdfd; text-align:center; }
+    #about, #contact { background: rgba(255,255,255,0.9); text-align:center; border-radius:15px; margin:40px 0; padding:40px; box-shadow:0 8px 30px rgba(0,0,0,0.2);}
     #about h2, #contact h2 { font-size:2em; margin-bottom:20px; }
-    #about p, #contact p { font-size:1.1em; color:#555; max-width:800px; margin:0 auto; }
+    #about p, #contact p { font-size:1.1em; color:#333; max-width:800px; margin:0 auto; }
 
     /* Footer */
     footer { background:#1e1e1e; color:white; text-align:center; padding:20px; margin-top:30px; }
@@ -98,11 +111,6 @@
       nav a { display:block; margin:5px 0; }
       .shop { grid-template-columns: 1fr; gap:20px; }
       #cart-btn { padding:8px 12px; font-size:0.9em; }
-    }
-
-    /* Animations */
-    @keyframes fadeIn {
-      to { opacity:1; transform: translateY(0); }
     }
   </style>
 </head>
@@ -136,14 +144,14 @@
     <div class="product">
       <img src="assets/img1.png" alt="Nike Mind Runner">
       <h2>Nike Mind Runner</h2>
-      <p>Experience ultimate comfort and style with the Nike Mind Runner – designed for peak performance.</p>
+      <p>Ultimate comfort and style for peak performance.</p>
       <div class="price">$19.99</div>
       <button class="snipcart-add-item"
               data-item-id="nike-mind-1"
               data-item-price="19.99"
               data-item-url="."
               data-item-name="Nike Mind Runner"
-              data-item-description="Experience ultimate comfort and style with the Nike Mind Runner – designed for peak performance."
+              data-item-description="Ultimate comfort and style for peak performance."
               data-item-image="assets/img1.png">
         <i class="fas fa-shopping-cart"></i> Add to Cart
       </button>
@@ -153,14 +161,14 @@
     <div class="product">
       <img src="assets/img2.png" alt="Nike Mind Air">
       <h2>Nike Mind Air</h2>
-      <p>Step into the future with Nike Mind Air – lightweight, breathable, and built for champions.</p>
+      <p>Lightweight, breathable, and built for champions.</p>
       <div class="price">$29.99</div>
       <button class="snipcart-add-item"
               data-item-id="nike-mind-2"
               data-item-price="29.99"
               data-item-url="."
               data-item-name="Nike Mind Air"
-              data-item-description="Step into the future with Nike Mind Air – lightweight, breathable, and built for champions."
+              data-item-description="Lightweight, breathable, and built for champions."
               data-item-image="assets/img2.png">
         <i class="fas fa-shopping-cart"></i> Add to Cart
       </button>
@@ -170,14 +178,14 @@
     <div class="product">
       <img src="assets/img3.png" alt="Nike Mind Zoom">
       <h2>Nike Mind Zoom</h2>
-      <p>Push your limits with Nike Mind Zoom – engineered for speed, comfort, and style on every run.</p>
+      <p>Engineered for speed, comfort, and style.</p>
       <div class="price">$39.99</div>
       <button class="snipcart-add-item"
               data-item-id="nike-mind-3"
               data-item-price="39.99"
               data-item-url="."
               data-item-name="Nike Mind Zoom"
-              data-item-description="Push your limits with Nike Mind Zoom – engineered for speed, comfort, and style on every run."
+              data-item-description="Engineered for speed, comfort, and style."
               data-item-image="assets/img3.png">
         <i class="fas fa-shopping-cart"></i> Add to Cart
       </button>
@@ -187,7 +195,7 @@
   <!-- About Section -->
   <section id="about">
     <h2>About Us</h2>
-    <p>Hakeem's Shop is dedicated to providing high-quality Nike Mind products with exceptional customer service. Our goal is to make online shopping simple, safe, and enjoyable for everyone.</p>
+    <p>Hakeem's Shop provides premium Nike Mind products with exceptional customer service. Our goal is to make online shopping secure, easy, and enjoyable for everyone.</p>
   </section>
 
   <!-- Contact Section -->
