@@ -16,216 +16,87 @@
 <script async src="https://cdn.snipcart.com/themes/v3.3.1/default/snipcart.js"></script>
 
 <style>
-/* --- GENERAL --- */
+/* GENERAL */
 *{margin:0;padding:0;box-sizing:border-box;}
-body{
-  font-family:'Roboto',sans-serif;
-  color:#111;
-  background:linear-gradient(135deg,#f5f5f5,#e0e0e0);
-  overflow-x:hidden;
-}
+body{font-family:'Roboto',sans-serif;color:#111;background:#f5f5f5;scroll-behavior:smooth;overflow-x:hidden;}
+a{text-decoration:none;}
 
-/* --- HEADER --- */
+/* HEADER */
 header{
-  position:fixed;
-  top:0;
-  width:100%;
-  z-index:1000;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:20px 40px;
-  background:rgba(0,0,0,0.85);
-  backdrop-filter:blur(10px);
+  position:fixed;top:0;width:100%;z-index:1000;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:15px 40px;background:rgba(0,0,0,0.85);backdrop-filter:blur(10px);
   box-shadow:0 2px 15px rgba(0,0,0,0.3);
 }
 header h1{
-  font-family:'Montserrat',sans-serif;
-  color:#ffdd57;
-  font-size:2em;
-  letter-spacing:1px;
+  font-family:'Montserrat',sans-serif;color:#ffdd57;font-size:2em;letter-spacing:1px;
 }
-nav a{
-  color:white;
-  text-decoration:none;
-  margin-left:25px;
-  font-weight:600;
-  transition:color 0.3s, transform 0.3s;
-}
-nav a:hover{
-  color:#ffdd57;
-  transform:scale(1.05);
-}
+nav a{color:white;margin-left:25px;font-weight:600;transition:0.3s;}
+nav a:hover{color:#ffdd57;transform:scale(1.05);}
 
-/* --- HERO SECTION --- */
-#hero{
-  width:100%;
-  height:90vh;
-  position:relative;
-  overflow:hidden;
-}
-#hero video{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
-#hero .hero-overlay{
-  position:absolute;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  background:rgba(0,0,0,0.35);
-  color:#fff;
-  text-align:center;
-  padding:20px;
-}
-#hero h2{
-  font-size:3.5em;
-  font-family:'Montserrat',sans-serif;
-  letter-spacing:2px;
-  text-shadow:2px 2px 10px rgba(0,0,0,0.5);
-  margin-bottom:20px;
-}
-#hero p{
-  font-size:1.3em;
-  color:#fff;
-  text-shadow:1px 1px 8px rgba(0,0,0,0.4);
-}
-
-/* --- SIDE MENU --- */
+/* SIDE MENU */
 #sideMenu{
-  position:fixed;
-  top:0;
-  left:-300px;
-  width:300px;
-  height:100%;
-  background:#fff;
-  padding:25px;
-  z-index:1001;
-  transition:left 0.4s ease;
-  overflow-y:auto;
+  position:fixed;top:0;left:-300px;width:300px;height:100%;
+  background:#fff;padding:25px;z-index:1001;transition:left 0.4s ease;overflow-y:auto;
+  box-shadow:5px 0 20px rgba(0,0,0,0.3);
 }
-#sideMenu h3{
-  font-weight:700;
-  margin-bottom:20px;
-  font-size:1.3em;
-  color:#111;
-}
-#sideMenu a{
-  display:block;
-  margin-bottom:15px;
-  color:#111;
-  text-decoration:none;
-  font-weight:500;
-  transition:color 0.3s;
-}
+#sideMenu h3{font-weight:700;margin-bottom:20px;font-size:1.3em;color:#111;}
+#sideMenu a{display:block;margin-bottom:15px;color:#111;font-weight:500;transition:0.3s;}
 #sideMenu a:hover{color:#ffdd57;}
-#overlay{
-  position:fixed;
-  top:0; left:0; width:0; height:100%;
-  background:rgba(0,0,0,0.5);
-  z-index:1000;
-  opacity:0;
-  transition:opacity 0.4s,width 0s 0.4s;
-}
+#overlay{position:fixed;top:0;left:0;width:0;height:100%;background:rgba(0,0,0,0.5);z-index:1000;opacity:0;transition:opacity 0.4s,width 0s 0.4s;}
 
-/* --- SHOP GRID --- */
-.shop{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-  gap:30px;
-  padding:100px 40px 60px;
+/* HERO CAROUSEL */
+#hero{position:relative;width:100%;height:90vh;overflow:hidden;}
+.hero-slide{position:absolute;top:0;left:0;width:100%;height:100%;opacity:0;transition:opacity 1s ease;}
+.hero-slide.active{opacity:1;z-index:1;}
+.hero-slide video, .hero-slide img{width:100%;height:100%;object-fit:cover;}
+.hero-overlay{
+  position:absolute;top:0;left:0;width:100%;height:100%;
+  display:flex;flex-direction:column;justify-content:center;align-items:center;
+  background:rgba(0,0,0,0.35);color:#fff;text-align:center;padding:20px;
 }
-.product{
-  background:white;
-  border-radius:15px;
-  text-align:center;
-  overflow:hidden;
-  padding:15px;
-  position:relative;
-  box-shadow:0 8px 25px rgba(0,0,0,0.15);
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  min-height:500px;
+.hero-overlay h2{font-size:3.5em;font-family:'Montserrat',sans-serif;letter-spacing:2px;text-shadow:2px 2px 10px rgba(0,0,0,0.5);margin-bottom:20px;}
+.hero-overlay p{font-size:1.3em;color:#fff;text-shadow:1px 1px 8px rgba(0,0,0,0.4);}
+.hero-controls{
+  position:absolute;bottom:20px;left:50%;transform:translateX(-50%);
+  display:flex;gap:10px;
+}
+.hero-dot{width:12px;height:12px;border-radius:50%;background:#fff;opacity:0.5;cursor:pointer;}
+.hero-dot.active{opacity:1;background:#ffdd57;}
+
+/* SHOP GRID */
+.shop{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:30px;padding:80px 40px 60px;}
+.product{background:white;border-radius:15px;text-align:center;overflow:hidden;padding:15px;position:relative;
+  box-shadow:0 8px 25px rgba(0,0,0,0.15);display:flex;flex-direction:column;align-items:center;min-height:500px;
   transition:transform 0.4s, box-shadow 0.4s;
 }
 .product:hover{transform:translateY(-5px); box-shadow:0 12px 30px rgba(0,0,0,0.2);}
-.product img{
-  width:100%;
-  height:250px;
-  object-fit:cover;
-  border-radius:10px;
-  margin-bottom:15px;
-  transition:transform 0.4s;
-}
+.product img{width:100%;height:250px;object-fit:cover;border-radius:10px;margin-bottom:15px;transition:transform 0.4s;}
 .product:hover img{transform:scale(1.1);}
 .product h2{font-size:1.3em;margin-bottom:10px;}
 .product p{font-size:0.95em;color:#555;margin-bottom:10px;}
 .product .price{font-weight:700;font-size:1.1em;margin-bottom:15px;}
-.product button{
-  position:absolute;
-  bottom:20px;
-  left:50%;
-  transform:translateX(-50%);
-  padding:10px 20px;
-  background:#ffdd57;
-  border:none;
-  border-radius:5px;
-  font-weight:600;
-  cursor:pointer;
-  opacity:0;
-  transition:opacity 0.3s,transform 0.3s;
-}
+.product button{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);
+  padding:10px 20px;background:#ffdd57;border:none;border-radius:5px;font-weight:600;
+  cursor:pointer;opacity:0;transition:opacity 0.3s,transform 0.3s;}
 .product:hover button{opacity:1; transform:translateX(-50%) scale(1.05);}
 
-/* --- ABOUT & CONTACT --- */
-#about,#contact{
-  background:#fff;
-  padding:50px;
-  margin:30px 40px;
-  border-radius:15px;
-  text-align:center;
-  box-shadow:0 8px 25px rgba(0,0,0,0.1);
-}
+/* ABOUT & CONTACT */
+#about,#contact{background:#fff;padding:50px;margin:30px 40px;border-radius:15px;text-align:center;box-shadow:0 8px 25px rgba(0,0,0,0.1);}
 #about h2,#contact h2{font-size:2em;margin-bottom:20px;color:#111;}
 #about p,#contact p{font-size:1.1em;color:#333;}
 
-/* --- FOOTER --- */
-footer{
-  background:#111;
-  color:#fff;
-  text-align:center;
-  padding:20px;
-}
+/* FOOTER */
+footer{background:#111;color:#fff;text-align:center;padding:20px;}
 footer a{color:#ffdd57;margin:0 10px;text-decoration:none;}
 footer a:hover{text-decoration:underline;}
 
-/* --- CART BUTTON --- */
-#cart-btn{
-  position:fixed;
-  top:20px;
-  right:20px;
-  background:#ffdd57;
-  color:#111;
-  padding:10px 15px;
-  border-radius:50px;
-  cursor:pointer;
-  z-index:1002;
-  display:flex;
-  align-items:center;
-  gap:5px;
-  font-weight:700;
-  transition:background 0.3s,transform 0.3s;
-}
+/* CART BUTTON */
+#cart-btn{position:fixed;top:20px;right:20px;background:#ffdd57;color:#111;padding:10px 15px;border-radius:50px;
+cursor:pointer;z-index:1002;display:flex;align-items:center;gap:5px;font-weight:700;transition:background 0.3s,transform 0.3s;}
 #cart-btn:hover{background:#ffc107; transform:scale(1.05);}
 
-/* --- RESPONSIVE --- */
+/* RESPONSIVE */
 @media(max-width:900px){.shop{grid-template-columns:repeat(2,1fr);}}
 @media(max-width:600px){.shop{grid-template-columns:1fr;} nav a{display:none;}}
 </style>
@@ -259,65 +130,68 @@ footer a:hover{text-decoration:underline;}
   <i class="fas fa-shopping-cart"></i> <span class="snipcart-total-items"></span>
 </div>
 
-<!-- HERO VIDEO -->
+<!-- HERO CAROUSEL -->
 <section id="hero">
-  <video autoplay muted loop>
-    <source src="assets/hero.mp4" type="video/mp4">
-  </video>
-  <div class="hero-overlay">
-    <h2>Your Nike Mind Experience</h2>
-    <p>Premium products. Stylish performance. Secure shopping.</p>
+  <div class="hero-slide active"><video autoplay muted loop><source src="assets/hero1.mp4" type="video/mp4"></video>
+    <div class="hero-overlay"><h2>Nike Mind Collection</h2><p>Premium style and performance</p></div>
+  </div>
+  <div class="hero-slide"><video autoplay muted loop><source src="assets/hero2.mp4" type="video/mp4"></video>
+    <div class="hero-overlay"><h2>Performance Gear</h2><p>Innovative products for athletes</p></div>
+  </div>
+  <div class="hero-slide"><video autoplay muted loop><source src="assets/hero3.mp4" type="video/mp4"></video>
+    <div class="hero-overlay"><h2>Trending Now</h2><p>Shop the latest styles</p></div>
+  </div>
+  <div class="hero-controls">
+    <div class="hero-dot active"></div>
+    <div class="hero-dot"></div>
+    <div class="hero-dot"></div>
   </div>
 </section>
 
-<!-- SHOP SECTION -->
+<!-- SHOP GRID -->
 <section id="shop" class="shop">
-  <!-- Product 1 Placeholder -->
+  <!-- Product placeholders -->
   <div class="product" data-category="shoes">
     <img src="assets/placeholder1.png" alt="Product 1">
     <h2>Product 1</h2>
-    <p>Product description goes here.</p>
+    <p>Product description here.</p>
     <div class="price">$19.99</div>
     <button class="snipcart-add-item"
       data-item-id="product1"
       data-item-price="19.99"
       data-item-url="."
       data-item-name="Product 1"
-      data-item-description="Product description goes here."
+      data-item-description="Product description here."
       data-item-image="assets/placeholder1.png">
       <i class="fas fa-shopping-cart"></i> Add to Cart
     </button>
   </div>
-
-  <!-- Product 2 Placeholder -->
   <div class="product" data-category="clothing">
     <img src="assets/placeholder2.png" alt="Product 2">
     <h2>Product 2</h2>
-    <p>Product description goes here.</p>
+    <p>Product description here.</p>
     <div class="price">$29.99</div>
     <button class="snipcart-add-item"
       data-item-id="product2"
       data-item-price="29.99"
       data-item-url="."
       data-item-name="Product 2"
-      data-item-description="Product description goes here."
+      data-item-description="Product description here."
       data-item-image="assets/placeholder2.png">
       <i class="fas fa-shopping-cart"></i> Add to Cart
     </button>
   </div>
-
-  <!-- Product 3 Placeholder -->
   <div class="product" data-category="pants">
     <img src="assets/placeholder3.png" alt="Product 3">
     <h2>Product 3</h2>
-    <p>Product description goes here.</p>
+    <p>Product description here.</p>
     <div class="price">$39.99</div>
     <button class="snipcart-add-item"
       data-item-id="product3"
       data-item-price="39.99"
       data-item-url="."
       data-item-name="Product 3"
-      data-item-description="Product description goes here."
+      data-item-description="Product description here."
       data-item-image="assets/placeholder3.png">
       <i class="fas fa-shopping-cart"></i> Add to Cart
     </button>
@@ -346,14 +220,13 @@ footer a:hover{text-decoration:underline;}
 </footer>
 
 <!-- SNIPCART -->
-<div hidden id="snipcart" data-api-key="YmZhZGExNjMtMjRkYS00MGViLTk2YjgtMzBlZjcxNWY5ZjVmNjM5MDQwNzAzMTc4MTU1MDg3"></div>
+<div hidden id="snipcart" data-api-key="YOUR_SNIPCART_PUBLIC_API_KEY"></div>
 
 <script>
 // SIDE MENU
 const sideMenu = document.getElementById('sideMenu');
 const overlay = document.getElementById('overlay');
 const menuBtn = document.getElementById('menuBtn');
-
 menuBtn.addEventListener('click', ()=>{
   sideMenu.style.left='0';
   overlay.style.width='100%';
@@ -381,6 +254,19 @@ categoryLinks.forEach(link=>{
     overlay.style.width='0';
   });
 });
+
+// HERO CAROUSEL
+let slideIndex=0;
+const slides=document.querySelectorAll('.hero-slide');
+const dots=document.querySelectorAll('.hero-dot');
+function showSlide(index){
+  slides.forEach((s,i)=>{s.classList.remove('active');dots[i].classList.remove('active');});
+  slides[index].classList.add('active');
+  dots[index].classList.add('active');
+}
+function nextSlide(){slideIndex=(slideIndex+1)%slides.length;showSlide(slideIndex);}
+setInterval(nextSlide,5000); // 5 seconds auto
+dots.forEach((dot,i)=>{dot.addEventListener('click',()=>{slideIndex=i;showSlide(slideIndex);});});
 </script>
 
 </body>
