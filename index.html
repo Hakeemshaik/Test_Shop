@@ -1,220 +1,308 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hakeem's Shop</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hakeem's Shop</title>
 
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Montserrat:wght@700&display=swap" rel="stylesheet">
 
-  <!-- Font Awesome -->
-  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+<!-- Font Awesome -->
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 
-  <!-- Snipcart -->
-  <link rel="stylesheet" href="https://cdn.snipcart.com/themes/v3.3.1/default/snipcart.css" />
-  <script async src="https://cdn.snipcart.com/themes/v3.3.1/default/snipcart.js"></script>
+<!-- Snipcart -->
+<link rel="stylesheet" href="https://cdn.snipcart.com/themes/v3.3.1/default/snipcart.css" />
+<script async src="https://cdn.snipcart.com/themes/v3.3.1/default/snipcart.js"></script>
 
-  <style>
-    * { box-sizing: border-box; margin:0; padding:0; }
-    body { font-family:'Roboto', sans-serif; color:#333; scroll-behavior: smooth; background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #a1c4fd, #c2e9fb); background-size: 400% 400%; animation: gradientBG 15s ease infinite; }
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    font-family:'Roboto', sans-serif;
+    color:#333;
+    scroll-behavior:smooth;
+    background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #a1c4fd, #c2e9fb);
+    background-size:400% 400%;
+    animation:gradientBG 15s ease infinite;
+  }
+  @keyframes gradientBG{
+    0%{background-position:0% 50%;}
+    50%{background-position:100% 50%;}
+    100%{background-position:0% 50%;}
+  }
 
-    /* Animated gradient background */
-    @keyframes gradientBG {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
+  /* Header */
+  header{
+    background: rgba(30,30,30,0.9);
+    color:white;
+    padding:15px 0;
+    position:sticky;
+    top:0;
+    z-index:1000;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    box-shadow:0 2px 10px rgba(0,0,0,0.3);
+    backdrop-filter: blur(10px);
+  }
+  header h1{
+    font-family:'Montserrat', sans-serif;
+    font-size:2.2em;
+    margin-left:30px;
+    color:#ffdd57;
+    letter-spacing:1px;
+  }
+  nav{
+    margin-right:30px;
+  }
+  nav a{
+    color:white;
+    margin:0 15px;
+    text-decoration:none;
+    font-weight:500;
+    transition: color 0.3s, transform 0.3s;
+  }
+  nav a:hover{ color:#ffdd57; transform: scale(1.05); }
 
-    /* Header */
-    header { background: rgba(30,30,30,0.9); color:white; padding:15px 0; position:sticky; top:0; z-index:1000; display:flex; justify-content:center; align-items:center; box-shadow:0 2px 10px rgba(0,0,0,0.3); backdrop-filter: blur(10px); transition: all 0.3s; }
-    header h1 { font-size:2em; margin-right:40px; transition: transform 0.3s; }
-    header h1:hover { transform: scale(1.05); }
-    nav a { color:white; margin:0 15px; text-decoration:none; font-weight:500; transition: color 0.3s, transform 0.3s; }
-    nav a:hover { color:#ffdd57; transform: scale(1.05); }
+  /* Floating Cart Button */
+  #cart-btn{
+    position:fixed;
+    top:20px;
+    right:20px;
+    background:#ffdd57;
+    color:#1e1e1e;
+    padding:10px 15px;
+    border-radius:50px;
+    cursor:pointer;
+    z-index:1001;
+    font-weight:700;
+    display:flex;
+    align-items:center;
+    gap:5px;
+    box-shadow:0 4px 10px rgba(0,0,0,0.2);
+    transition: background 0.3s, transform 0.3s;
+  }
+  #cart-btn:hover{ background:#ffc107; transform: scale(1.05); }
 
-    /* Floating cart button */
-    #cart-btn {
-      position:fixed;
-      top:20px;
-      right:20px;
-      background:#ffdd57;
-      color:#1e1e1e;
-      padding:10px 15px;
-      border-radius:50px;
-      cursor:pointer;
-      z-index:1001;
-      font-weight:700;
-      display:flex;
-      align-items:center;
-      gap:5px;
-      box-shadow:0 4px 10px rgba(0,0,0,0.2);
-      transition: background 0.3s, transform 0.3s;
-    }
-    #cart-btn:hover { background:#ffc107; transform: scale(1.05); }
+  /* Layout */
+  .main-container{
+    display:flex;
+    max-width:1200px;
+    margin:40px auto;
+    gap:30px;
+    padding:0 20px;
+  }
+  .side-menu{
+    flex:1;
+    background:rgba(255,255,255,0.9);
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 8px 30px rgba(0,0,0,0.15);
+    height:min-content;
+  }
+  .side-menu h3{
+    font-weight:700;
+    margin-bottom:15px;
+    font-size:1.2em;
+    color:#333;
+  }
+  .side-menu a{
+    display:block;
+    margin-bottom:10px;
+    color:#1e1e1e;
+    text-decoration:none;
+    font-weight:500;
+    transition: color 0.3s;
+  }
+  .side-menu a:hover{ color:#ffdd57; }
 
-    /* Sections */
-    section { padding:60px 20px; max-width:1200px; margin:0 auto; opacity:0; transform: translateY(30px); animation: fadeUp 1s forwards; }
-    #home { text-align:center; padding-top:100px; padding-bottom:100px; animation-delay:0.2s; }
-    #home h2 { font-size:2.5em; margin-bottom:20px; color:#fff; text-shadow:1px 1px 5px rgba(0,0,0,0.3);}
-    #home p { font-size:1.2em; color:#eee; }
+  .content{
+    flex:3;
+  }
 
-    @keyframes fadeUp {
-      to { opacity:1; transform: translateY(0); }
-    }
+  /* Sections */
+  section{ margin-bottom:60px; opacity:0; transform: translateY(30px); animation:fadeUp 1s forwards; }
+  #home{text-align:center; padding-top:80px; padding-bottom:80px; animation-delay:0.2s;}
+  #home h2{font-size:2.5em;margin-bottom:20px;color:#fff;text-shadow:1px 1px 5px rgba(0,0,0,0.3);}
+  #home p{font-size:1.2em;color:#eee;}
 
-    /* Shop Grid */
-    .shop {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap:30px;
-      justify-items: center;
-    }
-    .product {
-      background:white; 
-      border-radius:15px; 
-      text-align:center; 
-      padding:20px; 
-      box-shadow:0 8px 20px rgba(0,0,0,0.15); 
-      transition: transform 0.4s, box-shadow 0.4s;
-      width:100%;
-      max-width:300px;
-      display:flex;
-      flex-direction: column;
-      align-items: center;
-      min-height: 470px; /* uniform height */
-      overflow: hidden;
-    }
-    .product:hover { transform: translateY(-10px) scale(1.05); box-shadow:0 20px 40px rgba(0,0,0,0.25); }
-    .product img { width:100%; height:180px; object-fit:cover; border-radius:10px; margin-bottom:15px; transition: transform 0.4s; }
-    .product:hover img { transform: scale(1.1); }
-    .product h2 { font-size:1.2em; margin-bottom:10px; }
-    .product p { font-size:0.95em; margin-bottom:10px; font-weight:500; color:#555; }
-    .product .price { font-size:1.1em; font-weight:700; color:#1e1e1e; margin-bottom:15px; }
-    .product button { padding:10px 25px; background:#28a745; color:white; border:none; border-radius:5px; cursor:pointer; font-weight:600; transition: background 0.3s, transform 0.3s; }
-    .product button:hover { background:#218838; transform: scale(1.05); }
+  @keyframes fadeUp{ to{opacity:1; transform:translateY(0);} }
 
-    /* About & Contact */
-    #about, #contact { background: rgba(255,255,255,0.9); text-align:center; border-radius:15px; margin:40px 0; padding:40px; box-shadow:0 8px 30px rgba(0,0,0,0.2);}
-    #about h2, #contact h2 { font-size:2em; margin-bottom:20px; }
-    #about p, #contact p { font-size:1.1em; color:#333; max-width:800px; margin:0 auto; }
+  /* Shop Grid */
+  .shop{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:30px;
+  }
+  .product{
+    background:white;
+    border-radius:15px;
+    text-align:center;
+    padding:20px;
+    box-shadow:0 8px 20px rgba(0,0,0,0.15);
+    transition: transform 0.4s, box-shadow 0.4s;
+    width:100%;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    min-height:470px;
+    overflow:hidden;
+  }
+  .product:hover{ transform:translateY(-10px) scale(1.05); box-shadow:0 20px 40px rgba(0,0,0,0.25); }
+  .product img{ width:100%; height:180px; object-fit:cover; border-radius:10px; margin-bottom:15px; transition: transform 0.4s; }
+  .product:hover img{ transform:scale(1.1); }
+  .product h2{ font-size:1.2em;margin-bottom:10px; }
+  .product p{ font-size:0.95em;margin-bottom:10px;font-weight:500;color:#555; }
+  .product .price{ font-size:1.1em;font-weight:700;color:#1e1e1e;margin-bottom:15px; }
+  .product button{ padding:10px 25px; background:#28a745; color:white; border:none; border-radius:5px; cursor:pointer; font-weight:600; transition: background 0.3s, transform 0.3s; }
+  .product button:hover{ background:#218838; transform: scale(1.05); }
 
-    /* Footer */
-    footer { background:#1e1e1e; color:white; text-align:center; padding:20px; margin-top:30px; }
-    footer a { color:#ffdd57; text-decoration:none; margin:0 10px; }
-    footer a:hover { text-decoration:underline; }
+  /* About & Contact inside content */
+  #about, #contact{
+    background: rgba(255,255,255,0.9);
+    border-radius:15px;
+    padding:40px;
+    box-shadow:0 8px 30px rgba(0,0,0,0.2);
+    margin-bottom:60px;
+  }
+  #about h2,#contact h2{font-size:2em;margin-bottom:20px;}
+  #about p,#contact p{font-size:1.1em;color:#333; max-width:100%; margin:0 auto;}
 
-    /* Responsive */
-    @media(max-width:900px){ .shop { grid-template-columns: repeat(2, 1fr); } }
-    @media(max-width:600px){
-      header h1 { font-size:1.5em; margin-right:10px; }
-      nav a { display:block; margin:5px 0; }
-      .shop { grid-template-columns: 1fr; gap:20px; }
-      #cart-btn { padding:8px 12px; font-size:0.9em; }
-    }
-  </style>
+  /* Footer */
+  footer{ background:#1e1e1e; color:white; text-align:center; padding:20px; }
+  footer a{ color:#ffdd57; text-decoration:none; margin:0 10px; }
+  footer a:hover{ text-decoration:underline; }
+
+  /* Responsive */
+  @media(max-width:900px){
+    .main-container{ flex-direction:column; }
+    .shop{ grid-template-columns:repeat(2,1fr); }
+  }
+  @media(max-width:600px){
+    header h1{ font-size:1.5em; margin-left:10px; }
+    nav a{ display:block; margin:5px 0; }
+    .shop{ grid-template-columns:1fr; gap:20px; }
+  }
+</style>
 </head>
 <body>
 
-  <!-- Header -->
-  <header>
-    <h1>Hakeem's Shop</h1>
-    <nav>
-      <a href="#home">Home</a>
-      <a href="#shop">Shop</a>
-      <a href="#about">About</a>
-      <a href="#contact">Contact</a>
-    </nav>
-  </header>
+<!-- Header -->
+<header>
+  <h1>Hakeem's Shop</h1>
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#shop">Shop</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
 
-  <!-- Floating Cart Button -->
-  <div id="cart-btn" class="snipcart-checkout">
-    <i class="fas fa-shopping-cart"></i> <span class="snipcart-total-items"></span>
+<!-- Floating Cart Button -->
+<div id="cart-btn" class="snipcart-checkout">
+  <i class="fas fa-shopping-cart"></i> <span class="snipcart-total-items"></span>
+</div>
+
+<!-- Home Section -->
+<section id="home">
+  <h2>Welcome to Hakeem's Shop</h2>
+  <p>Discover amazing Nike Mind products. Shop securely with our integrated checkout and enjoy premium style and performance.</p>
+</section>
+
+<!-- Main Container with Side Menu and Content -->
+<div class="main-container">
+
+  <!-- Side Menu -->
+  <div class="side-menu">
+    <h3>Categories</h3>
+    <a href="#shop">Clothing</a>
+    <a href="#shop">Shoes</a>
+    <a href="#shop">Pants</a>
   </div>
 
-  <!-- Home Section -->
-  <section id="home">
-    <h2>Welcome to Hakeem's Shop</h2>
-    <p>Discover amazing Nike Mind products. Shop securely with our integrated checkout and enjoy premium style and performance.</p>
-  </section>
+  <!-- Content -->
+  <div class="content">
 
-  <!-- Shop Section -->
-  <section id="shop" class="shop">
-    <!-- Product 1 -->
-    <div class="product">
-      <img src="assets/img1.png" alt="Nike Mind Runner">
-      <h2>Nike Mind Runner</h2>
-      <p>Ultimate comfort and style for peak performance.</p>
-      <div class="price">$19.99</div>
-      <button class="snipcart-add-item"
-              data-item-id="nike-mind-1"
-              data-item-price="19.99"
-              data-item-url="."
-              data-item-name="Nike Mind Runner"
-              data-item-description="Ultimate comfort and style for peak performance."
-              data-item-image="assets/img1.png">
-        <i class="fas fa-shopping-cart"></i> Add to Cart
-      </button>
-    </div>
+    <!-- Shop Section -->
+    <section id="shop" class="shop">
+      <!-- Product 1 -->
+      <div class="product">
+        <img src="assets/img1.png" alt="Nike Mind Runner">
+        <h2>Nike Mind Runner</h2>
+        <p>Ultimate comfort and style for peak performance.</p>
+        <div class="price">$19.99</div>
+        <button class="snipcart-add-item"
+                data-item-id="nike-mind-1"
+                data-item-price="19.99"
+                data-item-url="."
+                data-item-name="Nike Mind Runner"
+                data-item-description="Ultimate comfort and style for peak performance."
+                data-item-image="assets/img1.png">
+          <i class="fas fa-shopping-cart"></i> Add to Cart
+        </button>
+      </div>
 
-    <!-- Product 2 -->
-    <div class="product">
-      <img src="assets/img2.png" alt="Nike Mind Air">
-      <h2>Nike Mind Air</h2>
-      <p>Lightweight, breathable, and built for champions.</p>
-      <div class="price">$29.99</div>
-      <button class="snipcart-add-item"
-              data-item-id="nike-mind-2"
-              data-item-price="29.99"
-              data-item-url="."
-              data-item-name="Nike Mind Air"
-              data-item-description="Lightweight, breathable, and built for champions."
-              data-item-image="assets/img2.png">
-        <i class="fas fa-shopping-cart"></i> Add to Cart
-      </button>
-    </div>
+      <!-- Product 2 -->
+      <div class="product">
+        <img src="assets/img2.png" alt="Nike Mind Air">
+        <h2>Nike Mind Air</h2>
+        <p>Lightweight, breathable, and built for champions.</p>
+        <div class="price">$29.99</div>
+        <button class="snipcart-add-item"
+                data-item-id="nike-mind-2"
+                data-item-price="29.99"
+                data-item-url="."
+                data-item-name="Nike Mind Air"
+                data-item-description="Lightweight, breathable, and built for champions."
+                data-item-image="assets/img2.png">
+          <i class="fas fa-shopping-cart"></i> Add to Cart
+        </button>
+      </div>
 
-    <!-- Product 3 -->
-    <div class="product">
-      <img src="assets/img3.png" alt="Nike Mind Zoom">
-      <h2>Nike Mind Zoom</h2>
-      <p>Engineered for speed, comfort, and style.</p>
-      <div class="price">$39.99</div>
-      <button class="snipcart-add-item"
-              data-item-id="nike-mind-3"
-              data-item-price="39.99"
-              data-item-url="."
-              data-item-name="Nike Mind Zoom"
-              data-item-description="Engineered for speed, comfort, and style."
-              data-item-image="assets/img3.png">
-        <i class="fas fa-shopping-cart"></i> Add to Cart
-      </button>
-    </div>
-  </section>
+      <!-- Product 3 -->
+      <div class="product">
+        <img src="assets/img3.png" alt="Nike Mind Zoom">
+        <h2>Nike Mind Zoom</h2>
+        <p>Engineered for speed, comfort, and style.</p>
+        <div class="price">$39.99</div>
+        <button class="snipcart-add-item"
+                data-item-id="nike-mind-3"
+                data-item-price="39.99"
+                data-item-url="."
+                data-item-name="Nike Mind Zoom"
+                data-item-description="Engineered for speed, comfort, and style."
+                data-item-image="assets/img3.png">
+          <i class="fas fa-shopping-cart"></i> Add to Cart
+        </button>
+      </div>
+    </section>
 
-  <!-- About Section -->
-  <section id="about">
-    <h2>About Us</h2>
-    <p>Hakeem's Shop provides premium Nike Mind products with exceptional customer service. Our goal is to make online shopping secure, easy, and enjoyable for everyone.</p>
-  </section>
+    <!-- About Section -->
+    <section id="about">
+      <h2>About Us</h2>
+      <p>Hakeem's Shop provides premium Nike Mind products with exceptional customer service. Our goal is to make online shopping secure, easy, and enjoyable for everyone.</p>
+    </section>
 
-  <!-- Contact Section -->
-  <section id="contact">
-    <h2>Contact Us</h2>
-    <p>Email: support@hakeemshop.com</p>
-    <p>Phone: +27 123 456 789</p>
-    <p>Follow us on social media for updates and promotions.</p>
-  </section>
+    <!-- Contact Section -->
+    <section id="contact">
+      <h2>Contact Us</h2>
+      <p>Email: support@hakeemshop.com</p>
+      <p>Phone: +27 123 456 789</p>
+      <p>Follow us on social media for updates and promotions.</p>
+    </section>
 
-  <!-- Footer -->
-  <footer>
-    &copy; 2026 Hakeem's Shop. Follow us on
-    <a href="#"><i class="fab fa-instagram"></i> Instagram</a>,
-    <a href="#"><i class="fab fa-twitter"></i> Twitter</a>
-  </footer>
+  </div>
+</div>
 
-  <!-- Snipcart container -->
-  <div hidden id="snipcart" data-api-key="YOUR_SNIPCART_PUBLIC_API_KEY"></div>
+<!-- Footer -->
+<footer>
+  &copy; 2026 Hakeem's Shop. Follow us on
+  <a href="#"><i class="fab fa-instagram"></i> Instagram</a>,
+  <a href="#"><i class="fab fa-twitter"></i> Twitter</a>
+</footer>
+
+<!-- Snipcart container -->
+<div hidden id="snipcart" data-api-key="YOUR_SNIPCART_PUBLIC_API_KEY"></div>
 
 </body>
 </html>
