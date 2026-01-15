@@ -1,263 +1,370 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hakeem's Nike Shop</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NIKE - Store</title>
+    
+    <!-- STYLES -->
+    <style>
+        :root {
+            --color-black: #111111;
+            --color-white: #ffffff;
+            --color-gray-light: #f5f5f5;
+            --color-gray-med: #757575;
+            --font-display: 'Oswald', sans-serif;
+            --font-main: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            --header-height: 60px;
+        }
 
-<!-- Google Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Oswald:wght@400;500;700&display=swap');
 
-<!-- Font Awesome -->
-<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; color: var(--color-black); background: var(--color-white); overflow-x: hidden; }
+        a { text-decoration: none; color: inherit; cursor: pointer; }
+        button { font-family: inherit; border: none; outline: none; background: none; cursor: pointer; }
+        ul { list-style: none; }
+        img { max-width: 100%; display: block; object-fit: cover; }
 
-<!-- Snipcart -->
-<link rel="stylesheet" href="https://cdn.snipcart.com/themes/v3.3.1/default/snipcart.css" />
-<script async src="https://cdn.snipcart.com/themes/v3.3.1/default/snipcart.js"></script>
+        /* --- UTILITY --- */
+        .container { max-width: 1440px; margin: 0 auto; padding: 0 24px; }
+        .btn { padding: 12px 30px; border-radius: 30px; font-weight: 700; font-size: 16px; cursor: pointer; transition: all 0.3s; }
+        .btn-dark { background: var(--color-black); color: white; border: 1px solid black; }
+        .btn-dark:hover { background: var(--color-gray-med); border-color: var(--color-gray-med); }
+        .hidden { display: none !important; }
+        .text-orange { color: #d65d28; }
 
-<style>
-/* GENERAL */
-*{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:'Roboto',sans-serif;color:#111;background:#f5f5f5;scroll-behavior:smooth;}
-a{text-decoration:none;color:#111;}
+        /* --- HEADER --- */
+        header { position: fixed; top: 0; left: 0; width: 100%; height: var(--header-height); background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); z-index: 1000; border-bottom: 1px solid transparent; transition: border 0.3s; }
+        header.scrolled { border-bottom: 1px solid #eee; }
+        
+        .nav-container { display: flex; justify-content: space-between; align-items: center; height: 100%; position: relative; }
+        .nav-logo { font-family: 'Oswald', sans-serif; font-weight: 700; font-size: 24px; letter-spacing: -1px; z-index: 10; }
 
-/* NAVIGATION */
-nav{display:flex;justify-content:center;align-items:center;background:#111;padding:15px;position:sticky;top:0;z-index:1000;}
-nav > ul{display:flex;gap:30px;list-style:none;}
-nav > ul > li{position:relative;font-weight:600;}
-nav > ul > li > a{color:white;transition:0.3s;font-size:1em;padding:8px;}
-nav > ul > li > a:hover{color:#ffdd57;}
+        /* Nav Links */
+        .nav-links { display: flex; gap: 30px; }
+        .nav-link { font-weight: 500; font-size: 14px; color: var(--color-black); position: relative; }
+        .nav-link::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: black; transition: width 0.3s; }
+        .nav-link:hover::after, .nav-link.active::after { width: 100%; }
 
-/* DROPDOWN MENU - HIDDEN UNTIL HOVER */
-nav ul li ul{
-  position:absolute;top:100%;left:0;background:#fff;min-width:250px;border-radius:8px;padding:15px;
-  box-shadow:0 8px 20px rgba(0,0,0,0.2);z-index:100;
-  display:none; /* hidden initially */
-  opacity:0;
-  transform:translateY(10px);
-  transition:opacity 0.3s ease, transform 0.3s ease;
-}
-nav ul li:hover > ul{
-  display:block; /* show on hover */
-  opacity:1;
-  transform:translateY(0);
-}
-nav ul li ul li{padding:5px 0;}
-nav ul li ul li a{color:#111;font-weight:500;}
-nav ul li ul li a:hover{color:#ffdd57;}
+        /* RIGHT SIDE WRAPPER (Search + Icons) */
+        .right-actions { 
+            display: flex; 
+            align-items: center; 
+            gap: 15px; 
+            z-index: 10; 
+        }
 
-/* MEGA MENU SECOND LEVEL */
-.mega-menu{display:grid;grid-template-columns:repeat(2,1fr);gap:15px;}
+        /* SEARCH BAR STYLING */
+        .search-container { 
+            display: flex; 
+            align-items: center; 
+            overflow: hidden; 
+            width: 0; /* Hidden by default */
+            opacity: 0; 
+            transition: all 0.4s ease; 
+        }
 
-/* HERO CAROUSEL */
-#hero{position:relative;width:100%;height:80vh;overflow:hidden;}
-.hero-slide{position:absolute;top:0;left:0;width:100%;height:100%;opacity:0;transition:opacity 1s ease;}
-.hero-slide.active{opacity:1;z-index:1;}
-.hero-slide video, .hero-slide img{width:100%;height:100%;object-fit:cover;}
-.hero-overlay{
-  position:absolute;top:0;left:0;width:100%;height:100%;
-  display:flex;flex-direction:column;justify-content:center;align-items:center;
-  background:rgba(0,0,0,0.35);color:#fff;text-align:center;padding:20px;
-}
-.hero-overlay h2{font-size:3em;font-family:'Montserrat',sans-serif;letter-spacing:2px;text-shadow:2px 2px 10px rgba(0,0,0,0.5);margin-bottom:20px;}
-.hero-overlay p{font-size:1.2em;color:#fff;text-shadow:1px 1px 8px rgba(0,0,0,0.4);}
-.hero-controls{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);display:flex;gap:10px;}
-.hero-dot{width:12px;height:12px;border-radius:50%;background:#fff;opacity:0.5;cursor:pointer;}
-.hero-dot.active{opacity:1;background:#ffdd57;}
+        /* Desktop: Search bar expands to the left of the icons */
+        .search-container.active { 
+            width: 250px; 
+            opacity: 1; 
+            margin-right: 10px; /* Space between input and cart icon */
+        }
 
-/* SHOP GRID */
-.shop{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:30px;padding:80px 40px 60px;}
-.product{background:white;border-radius:15px;text-align:center;overflow:hidden;padding:15px;position:relative;
-  box-shadow:0 8px 25px rgba(0,0,0,0.15);display:flex;flex-direction:column;align-items:center;min-height:500px;
-  transition:transform 0.4s, box-shadow 0.4s;}
-.product:hover{transform:translateY(-5px); box-shadow:0 12px 30px rgba(0,0,0,0.2);}
-.product img{width:100%;height:250px;object-fit:cover;border-radius:10px;margin-bottom:15px;transition:transform 0.4s;}
-.product:hover img{transform:scale(1.1);}
-.product h2{font-size:1.3em;margin-bottom:10px;}
-.product p{font-size:0.95em;color:#555;margin-bottom:10px;}
-.product .price{font-weight:700;font-size:1.1em;margin-bottom:15px;}
-.product button{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);
-  padding:10px 20px;background:#ffdd57;border:none;border-radius:5px;font-weight:600;
-  cursor:pointer;opacity:0;transition:opacity 0.3s,transform 0.3s;}
-.product:hover button{opacity:1; transform:translateX(-50%) scale(1.05);}
+        .search-input { 
+            width: 100%; 
+            padding: 8px 16px; 
+            border-radius: 20px; 
+            border: 1px solid #ccc; 
+            background: #f9f9f9; 
+            outline: none;
+        }
 
-/* ABOUT & CONTACT */
-#about,#contact{background:#fff;padding:50px;margin:30px 40px;border-radius:15px;text-align:center;box-shadow:0 8px 25px rgba(0,0,0,0.1);}
-#about h2,#contact h2{font-size:2em;margin-bottom:20px;color:#111;}
-#about p,#contact p{font-size:1.1em;color:#333;}
+        /* Icons */
+        .icon-btn { cursor: pointer; display: flex; align-items: center; justify-content: center; }
 
-/* FOOTER */
-footer{background:#111;color:#fff;text-align:center;padding:20px;}
-footer a{color:#ffdd57;margin:0 10px;text-decoration:none;}
-footer a:hover{text-decoration:underline;}
+        /* --- VIEWS --- */
+        .hero { height: 85vh; background: #eee; background-size: cover; background-position: center; display: flex; align-items: center; position: relative; }
+        .hero-content { padding-left: 5%; z-index: 2; max-width: 600px; }
+        .hero-title { font-family: 'Oswald', sans-serif; font-size: 80px; line-height: 0.9; text-transform: uppercase; margin-bottom: 20px; }
+        
+        .shop-header { padding-top: 100px; padding-bottom: 40px; text-align: center; }
+        .shop-title { font-family: 'Oswald', sans-serif; font-size: 48px; text-transform: uppercase; margin-bottom: 10px; }
 
-/* CART BUTTON */
-#cart-btn{position:fixed;top:20px;right:20px;background:#ffdd57;color:#111;padding:10px 15px;border-radius:50px;
-cursor:pointer;z-index:1002;display:flex;align-items:center;gap:5px;font-weight:700;transition:background 0.3s,transform 0.3s;}
-#cart-btn:hover{background:#ffc107; transform:scale(1.05);}
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; padding-bottom: 80px; }
+        .card { cursor: pointer; transition: transform 0.2s; }
+        .card:hover { transform: translateY(-5px); }
+        .card-img-wrap { height: 350px; background: #f5f5f5; position: relative; overflow: hidden; margin-bottom: 15px; }
+        .badge { position: absolute; top: 10px; left: 10px; background: white; padding: 4px 10px; font-size: 12px; font-weight: 700; text-transform: uppercase; }
 
-/* RESPONSIVE */
-@media(max-width:900px){.shop{grid-template-columns:repeat(2,1fr);}}
-@media(max-width:600px){.shop{grid-template-columns:1fr;} nav > ul{flex-direction:column;}}
-</style>
+        /* --- MODAL --- */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 2000; display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: 0.3s; }
+        .modal-overlay.open { opacity: 1; visibility: visible; }
+        .modal-content { background: white; width: 90%; max-width: 1000px; height: 80vh; display: flex; overflow: hidden; border-radius: 8px; position: relative; }
+        .close-modal { position: absolute; top: 20px; right: 20px; font-size: 30px; cursor: pointer; z-index: 10; background: white; border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; }
+        .modal-img { flex: 1; background: #f5f5f5; }
+        .modal-img img { width: 100%; height: 100%; object-fit: contain; }
+        .modal-details { flex: 1; padding: 60px; display: flex; flex-direction: column; justify-content: center; }
+        .modal-price { font-size: 24px; font-weight: 700; margin-bottom: 30px; }
+
+        /* Toast */
+        .toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: black; color: white; padding: 12px 24px; border-radius: 4px; z-index: 3000; opacity: 0; transition: opacity 0.3s; pointer-events: none; }
+        .toast.show { opacity: 1; }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; } 
+            .hero-title { font-size: 48px; }
+            .modal-content { flex-direction: column; height: 90vh; overflow-y: auto; }
+            .modal-img { height: 40%; }
+            .modal-details { padding: 30px; }
+            
+            /* Mobile Search Logic: Keep it centered because links are hidden */
+            .right-actions { position: absolute; right: 0; }
+            .search-container { 
+                position: absolute; 
+                left: 50%; 
+                transform: translateX(-50%); 
+                width: 0;
+                opacity: 0;
+                margin-right: 0;
+            }
+            .search-container.active {
+                width: 70%; /* Full width on mobile */
+                opacity: 1;
+                /* Override desktop styles */
+                transform: translateX(-50%);
+                margin-right: 0;
+                left: 50%;
+                right: auto;
+            }
+        }
+    </style>
 </head>
 <body>
 
-<!-- NAVIGATION WITH HOVER DROPDOWN -->
-<nav>
-<ul>
-  <li><a href="#">New</a>
-    <ul class="mega-menu">
-      <li><a href="#" data-category="new-arrivals">Shop All New Arrivals</a></li>
-      <li><a href="#" data-category="best-sellers">Best Sellers</a></li>
-      <li><a href="#" data-category="snkrs">SNKRS Launch Calendar</a></li>
-      <li><a href="#" data-category="highlights">Highlights</a></li>
-      <li><a href="#" data-category="jordan">Jordan: Coldest in the Game</a></li>
-      <li><a href="#" data-category="shox">Shox: Style it Like Them</a></li>
-      <li><a href="#" data-category="football">New in Football: Attack Pack</a></li>
-      <li><a href="#" data-category="nike-mind">Introducing: Nike Mind</a></li>
-      <li><a href="#" data-category="trending">Trending</a></li>
-      <li><a href="#" data-category="running">Supportive Running Shoes</a></li>
-      <li><a href="#" data-category="marathon">Marathon Shoes</a></li>
-      <li><a href="#" data-category="sportswear">Sportswear Clothing</a></li>
-      <li><a href="#" data-category="elite-football">Elite Football Boots</a></li>
-    </ul>
-  </li>
-  <li><a href="#">Brands</a>
-    <ul class="mega-menu">
-      <li><a href="#" data-category="nike-sportswear">Nike Sportswear</a></li>
-      <li><a href="#" data-category="acg">ACG: All Condition Gear</a></li>
-      <li><a href="#" data-category="jordan-brand">Jordan</a></li>
-      <li><a href="#" data-category="kobe">Kobe</a></li>
-      <li><a href="#" data-category="nocta">NOCTA</a></li>
-    </ul>
-  </li>
-  <li><a href="#">Men</a></li>
-  <li><a href="#">Women</a></li>
-  <li><a href="#">Kids</a></li>
-  <li><a href="#">Sport</a></li>
-  <li><a href="#" class="snipcart-checkout"><i class="fas fa-shopping-cart"></i> Cart (<span class="snipcart-total-items"></span>)</a></li>
-</ul>
-</nav>
+    <!-- TOAST -->
+    <div id="toast" class="toast">Added to Bag</div>
 
-<!-- HERO CAROUSEL -->
-<section id="hero">
-  <div class="hero-slide active"><video autoplay muted loop><source src="assets/hero1.mp4" type="video/mp4"></video>
-    <div class="hero-overlay"><h2>Nike Mind Collection</h2><p>Premium style and performance</p></div>
-  </div>
-  <div class="hero-slide"><video autoplay muted loop><source src="assets/hero2.mp4" type="video/mp4"></video>
-    <div class="hero-overlay"><h2>Performance Gear</h2><p>Innovative products for athletes</p></div>
-  </div>
-  <div class="hero-slide"><video autoplay muted loop><source src="assets/hero3.mp4" type="video/mp4"></video>
-    <div class="hero-overlay"><h2>Trending Now</h2><p>Shop the latest styles</p></div>
-  </div>
-  <div class="hero-controls">
-    <div class="hero-dot active"></div>
-    <div class="hero-dot"></div>
-    <div class="hero-dot"></div>
-  </div>
-</section>
+    <!-- HEADER -->
+    <header id="mainHeader">
+        <div class="container nav-container">
+            <div style="font-size: 24px; cursor: pointer;">&#9776;</div> <!-- Mobile Menu Icon -->
+            <a href="#" onclick="goHome()" class="nav-logo">NIKE</a>
 
-<!-- SHOP GRID -->
-<section id="shop" class="shop">
-  <div class="product" data-category="new-arrivals">
-    <img src="assets/placeholder1.png" alt="Product 1">
-    <h2>Product 1</h2>
-    <p>Product description here.</p>
-    <div class="price">$19.99</div>
-    <button class="snipcart-add-item"
-      data-item-id="product1"
-      data-item-price="19.99"
-      data-item-url="."
-      data-item-name="Product 1"
-      data-item-description="Product description here."
-      data-item-image="assets/placeholder1.png">
-      <i class="fas fa-shopping-cart"></i> Add to Cart
-    </button>
-  </div>
-  <div class="product" data-category="best-sellers">
-    <img src="assets/placeholder2.png" alt="Product 2">
-    <h2>Product 2</h2>
-    <p>Product description here.</p>
-    <div class="price">$29.99</div>
-    <button class="snipcart-add-item"
-      data-item-id="product2"
-      data-item-price="29.99"
-      data-item-url="."
-      data-item-name="Product 2"
-      data-item-description="Product description here."
-      data-item-image="assets/placeholder2.png">
-      <i class="fas fa-shopping-cart"></i> Add to Cart
-    </button>
-  </div>
-  <div class="product" data-category="nike-mind">
-    <img src="assets/placeholder3.png" alt="Product 3">
-    <h2>Product 3</h2>
-    <p>Product description here.</p>
-    <div class="price">$39.99</div>
-    <button class="snipcart-add-item"
-      data-item-id="product3"
-      data-item-price="39.99"
-      data-item-url="."
-      data-item-name="Product 3"
-      data-item-description="Product description here."
-      data-item-image="assets/placeholder3.png">
-      <i class="fas fa-shopping-cart"></i> Add to Cart
-    </button>
-  </div>
-</section>
+            <!-- Navigation Links (Middle) -->
+            <nav class="nav-links">
+                <a class="nav-link" onclick="filterProducts('new', this)">New & Featured</a>
+                <a class="nav-link" onclick="filterProducts('men', this)">Men</a>
+                <a class="nav-link" onclick="filterProducts('women', this)">Women</a>
+                <a class="nav-link" onclick="filterProducts('kids', this)">Kids</a>
+                <a class="nav-link text-orange" onclick="filterProducts('sale', this)">Sale</a>
+            </nav>
 
-<!-- ABOUT & CONTACT -->
-<section id="about">
-  <h2>About Us</h2>
-  <p>Hakeem's Shop delivers premium Nike Mind products with outstanding service. Secure and stylish online shopping experience.</p>
-</section>
+            <!-- Right Side: Search + Icons -->
+            <div class="right-actions">
+                
+                <!-- Search Bar (Expands left on desktop) -->
+                <div class="search-container" id="searchContainer">
+                    <input type="text" class="search-input" id="searchInput" placeholder="Search products...">
+                </div>
 
-<section id="contact">
-  <h2>Contact Us</h2>
-  <p>Email: support@hakeemshop.com</p>
-  <p>Phone: +27 123 456 789</p>
-  <p>Follow us on social media for updates and promotions.</p>
-</section>
+                <!-- Search Toggle Button -->
+                <button class="icon-btn" onclick="toggleSearch()">
+                    <svg width="24" height="24" stroke="currentColor" fill="none" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                </button>
 
-<!-- FOOTER -->
-<footer>
-  &copy; 2026 Hakeem's Shop. Follow us on
-  <a href="#"><i class="fab fa-instagram"></i> Instagram</a>,
-  <a href="#"><i class="fab fa-twitter"></i> Twitter</a>
-</footer>
+                <!-- Cart Icon (Snipcart Trigger) -->
+                <button class="icon-btn" onclick="openCart()">
+                    <svg width="24" height="24" stroke="currentColor" fill="none" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                </button>
+            </div>
+        </div>
+    </header>
 
-<!-- SNIPCART -->
-<div hidden id="snipcart" data-api-key="YOUR_SNIPCART_PUBLIC_API_KEY"></div>
+    <!-- VIEW: HOME -->
+    <div id="homeView">
+        <section class="hero" style="background-image: url('https://picsum.photos/seed/nikehero/1920/1080');">
+            <div class="hero-content">
+                <h1 class="hero-title">AIR MAX<br>PULSE</h1>
+                <p style="margin-bottom: 30px; font-size: 18px;">Big Air. Bold Style.</p>
+                <button class="btn btn-dark" onclick="filterProducts('new')">Shop New</button>
+            </div>
+        </section>
 
-<script>
-// HERO CAROUSEL
-let slideIndex=0;
-const slides=document.querySelectorAll('.hero-slide');
-const dots=document.querySelectorAll('.hero-dot');
-function showSlide(index){
-  slides.forEach((s,i)=>{s.classList.remove('active');dots[i].classList.remove('active');});
-  slides[index].classList.add('active');
-  dots[index].classList.add('active');
-}
-function nextSlide(){slideIndex=(slideIndex+1)%slides.length;showSlide(slideIndex);}
-setInterval(nextSlide,5000);
-dots.forEach((dot,i)=>{dot.addEventListener('click',()=>{slideIndex=i;showSlide(slideIndex);});});
+        <section class="container" style="padding: 60px 0;">
+            <h2 style="font-family: 'Oswald', sans-serif; font-size: 32px; margin-bottom: 30px;">Popular Right Now</h2>
+            <div class="product-grid" id="homeGrid"></div>
+        </section>
+    </div>
 
-// CATEGORY FILTER
-const categoryLinks=document.querySelectorAll('nav ul li ul li a[data-category]');
-const products=document.querySelectorAll('.product');
-categoryLinks.forEach(link=>{
-  link.addEventListener('click',e=>{
-    e.preventDefault();
-    const category=link.getAttribute('data-category');
-    products.forEach(p=>{
-      if(category==='all') p.style.display='flex';
-      else p.style.display=(p.dataset.category===category)?'flex':'none';
-    });
-    window.scrollTo({top:document.getElementById('shop').offsetTop-80,behavior:'smooth'});
-  });
-});
-</script>
+    <!-- VIEW: SHOP -->
+    <div id="shopView" class="hidden container">
+        <div class="shop-header">
+            <h2 class="shop-title" id="pageTitle">All Products</h2>
+            <p id="resultCount" style="color: #777;">Showing all products</p>
+        </div>
+        <div class="product-grid" id="shopGrid"></div>
+    </div>
+
+    <!-- MODAL -->
+    <div class="modal-overlay" id="productModal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal()">&times;</button>
+            <div class="modal-img"><img id="mImg" src=""></div>
+            <div class="modal-details">
+                <p class="modal-cat" id="mCat">Category</p>
+                <h1 class="modal-title" id="mTitle">Product</h1>
+                <p class="modal-price" id="mPrice">$0.00</p>
+                <p class="modal-desc">Designed for performance.</p>
+                <button class="btn btn-dark" id="addToBagBtn" style="width: 100%; max-width: 300px;">Add to Bag</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SNIPCART SETUP -->
+    <script>
+        window.SnipcartSettings = {
+            publicApiKey: 'YmZhZGExNjMtMjRkYS00MGViLTk2YjgtMzBlZjcxNWY5ZjVmNjM5MDQwNzAzMTc4MTU1MDg3',
+            loadStrategy: 'manual',
+            modalStyle: 'side'
+        };
+    </script>
+    <script src="https://cdn.snipcart.com/themes/v3.3.1/default/snipcart.js" defer></script>
+
+    <!-- LOGIC -->
+    <script>
+        // --- DATA ---
+        const products = [
+            { id: 'p1', name: "Nike Air Max 90", category: "men", price: 130.00, img: "https://picsum.photos/seed/men1/600/800", badge: "", desc: "Men's Shoes" },
+            { id: 'p2', name: "Nike Dunk Low", category: "women", price: 115.00, img: "https://picsum.photos/seed/women1/600/800", badge: "Just In", desc: "Women's Shoes" },
+            { id: 'p3', name: "Nike Pegasus 40", category: "men", price: 140.00, img: "https://picsum.photos/seed/men2/600/800", badge: "Best Seller", desc: "Running Shoes" },
+            { id: 'p4', name: "Air Jordan 1 Mid", category: "kids", price: 90.00, img: "https://picsum.photos/seed/kids1/600/800", badge: "", desc: "Kids' Shoes" },
+            { id: 'p5', name: "Zoom Vomero 5", category: "women", price: 160.00, img: "https://picsum.photos/seed/women2/600/800", badge: "", desc: "Women's Shoes" },
+            { id: 'p6', name: "Nike Air Force 1", category: "new", price: 110.00, img: "https://picsum.photos/seed/new1/600/800", badge: "New", desc: "Men's Shoes" },
+            { id: 'p7', name: "Blazer Mid '77", category: "sale", price: 95.00, img: "https://picsum.photos/seed/sale1/600/800", badge: "Sale", desc: "Lifestyle" },
+            { id: 'p8', name: "React Infinity", category: "men", price: 160.00, img: "https://picsum.photos/seed/men3/600/800", badge: "", desc: "Running Shoes" }
+        ];
+
+        // --- RENDER ---
+        function createCard(p) {
+            return `
+                <div class="card" onclick="openProduct('${p.id}')">
+                    <div class="card-img-wrap">
+                        ${p.badge ? `<span class="badge">${p.badge}</span>` : ''}
+                        <img src="${p.img}" style="width:100%; height:100%; object-fit:cover;">
+                    </div>
+                    <h3 style="font-size: 16px; font-weight: 700;">${p.name}</h3>
+                    <p style="color: #777; font-size: 14px;">${p.desc}</p>
+                    <p style="font-size: 16px; font-weight: 700;">$${p.price.toFixed(2)}</p>
+                </div>
+            `;
+        }
+
+        function renderGrid(id, list) {
+            const grid = document.getElementById(id);
+            grid.innerHTML = list.length ? list.map(createCard).join('') : '<p>No products found.</p>';
+        }
+
+        // --- NAVIGATION ---
+        function goHome() {
+            window.scrollTo(0,0);
+            document.getElementById('homeView').classList.remove('hidden');
+            document.getElementById('shopView').classList.add('hidden');
+            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+        }
+
+        function filterProducts(cat, el) {
+            if(el) { document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active')); el.classList.add('active'); }
+            else { document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active')); if(cat==='new') document.querySelectorAll('.nav-link')[0].classList.add('active'); }
+            
+            window.scrollTo(0,0);
+            document.getElementById('homeView').classList.add('hidden');
+            document.getElementById('shopView').classList.remove('hidden');
+            
+            const filtered = products.filter(p => cat === 'new' ? (p.badge === 'New' || p.badge === 'Just In') : cat === 'sale' ? (p.badge === 'Sale') : p.category === cat);
+            
+            const titleMap = {new:'New & Featured', men:'Men', women:'Women', kids:'Kids', sale:'Sale'};
+            document.getElementById('pageTitle').innerText = titleMap[cat];
+            document.getElementById('resultCount').innerText = `${filtered.length} products`;
+            renderGrid('shopGrid', filtered);
+        }
+
+        // --- SEARCH ---
+        function toggleSearch() {
+            const container = document.getElementById('searchContainer');
+            container.classList.toggle('active');
+            if(container.classList.contains('active')) document.getElementById('searchInput').focus();
+        }
+
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase();
+            if(term.length > 0) {
+                window.scrollTo(0,0);
+                document.getElementById('homeView').classList.add('hidden');
+                document.getElementById('shopView').classList.remove('hidden');
+                document.getElementById('pageTitle').innerText = `Search: "${term}"`;
+                const res = products.filter(p => p.name.toLowerCase().includes(term));
+                renderGrid('shopGrid', res);
+            }
+        });
+
+        // --- CART & SNIPCART ---
+        function openCart() {
+            if (window.Snipcart && window.Snipcart.api) {
+                window.Snipcart.api.theme.cart.open();
+            } else {
+                alert("Snipcart is loading... please wait a moment.");
+            }
+        }
+
+        let currentProduct = null;
+        const modal = document.getElementById('productModal');
+        
+        function openProduct(id) {
+            currentProduct = products.find(p => p.id === id);
+            document.getElementById('mImg').src = currentProduct.img;
+            document.getElementById('mCat').innerText = currentProduct.desc;
+            document.getElementById('mTitle').innerText = currentProduct.name;
+            document.getElementById('mPrice').innerText = '$' + currentProduct.price.toFixed(2);
+            modal.classList.add('open');
+        }
+
+        function closeModal() { modal.classList.remove('open'); }
+        modal.addEventListener('click', (e) => { if(e.target === modal) closeModal(); });
+
+        document.getElementById('addToBagBtn').addEventListener('click', () => {
+            showToast("Added " + currentProduct.name);
+            
+            if (window.Snipcart && window.Snipcart.api) {
+                window.Snipcart.api.cart.items.add({
+                    id: currentProduct.id,
+                    name: currentProduct.name,
+                    price: currentProduct.price,
+                    url: window.location.href,
+                    description: currentProduct.desc,
+                    image: currentProduct.img,
+                    quantity: 1
+                }).then(() => {
+                    window.Snipcart.api.theme.cart.open();
+                    closeModal();
+                });
+            }
+        });
+
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            t.innerText = msg; t.classList.add('show');
+            setTimeout(() => t.classList.remove('show'), 3000);
+        }
+
+        // --- INIT ---
+        document.addEventListener('DOMContentLoaded', () => {
+            renderGrid('homeGrid', products.slice(0,4));
+            window.addEventListener('scroll', () => {
+                document.getElementById('mainHeader').classList.toggle('scrolled', window.scrollY > 50);
+            });
+        });
+    </script>
 </body>
 </html>
