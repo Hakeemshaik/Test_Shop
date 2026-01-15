@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NIKE - Fixed Cart</title>
+    <title>NIKE - Fixed Sidebar</title>
     
     <!-- STYLES -->
     <style>
@@ -178,6 +178,12 @@
     </script>
     <script src="https://cdn.snipcart.com/themes/v3.3.1/default/snipcart.js" defer></script>
 
+    <!-- CSS OVERRIDE TO FIX SIDEBAR Z-INDEX -->
+    <style>
+        /* This ensures the Snipcart sidebar appears ABOVE the header */
+        .snipcart { z-index: 999999 !important; }
+    </style>
+
     <!-- LOGIC -->
     <script>
         // --- DATA ---
@@ -255,19 +261,32 @@
             }
         });
 
-        // --- CART & SNIPCART (WITH ERROR CHECKS) ---
+        // --- CART & SNIPCART (ROBUST ERROR HANDLING) ---
         function openCart() {
-            // CHECK 1: Did you replace the key?
+            // ERROR CHECK 1: API Key
             if (window.SnipcartSettings.publicApiKey.includes('YOUR_SNIPCART_PUBLIC_KEY_HERE')) {
-                alert("ERROR: You forgot to paste your Snipcart API Key in the code! Look for line ~290.");
+                alert("ERROR: You have not replaced the placeholder API Key! Look for 'YOUR_SNIPCART_PUBLIC_KEY_HERE' in the code.");
                 return;
             }
 
-            // CHECK 2: Is Snipcart loaded?
-            if (window.Snipcart && window.Snipcart.api) {
+            // ERROR CHECK 2: Script Loaded
+            if (!window.Snipcart) {
+                alert("ERROR: Snipcart script has not loaded yet. Wait a few seconds and try again.");
+                return;
+            }
+
+            // ERROR CHECK 3: API Ready
+            if (!window.Snipcart.api) {
+                alert("ERROR: Snipcart API not available.");
+                return;
+            }
+
+            // SUCCESS: Try to open
+            try {
                 window.Snipcart.api.theme.cart.open();
-            } else {
-                alert("Snipcart is still loading or blocked. Wait a few seconds.");
+            } catch (e) {
+                console.error(e);
+                alert("Error opening cart. Are you using a Local Server (localhost)? Opening from a folder (file://) often blocks the sidebar.");
             }
         }
 
@@ -287,8 +306,7 @@
         modal.addEventListener('click', (e) => { if(e.target === modal) closeModal(); });
 
         document.getElementById('addToBagBtn').addEventListener('click', () => {
-            // CHECK 1: Key
-            if (window.SnipcartSettings.publicApiKey.includes('YmZhZGExNjMtMjRkYS00MGViLTk2YjgtMzBlZjcxNWY5ZjVmNjM5MDQwNzAzMTc4MTU1MDg3')) {
+            if (window.SnipcartSettings.publicApiKey.includes('YOUR_SNIPCART_PUBLIC_KEY_HERE')) {
                 alert("Cannot add to cart: Missing API Key.");
                 return;
             }
@@ -300,7 +318,7 @@
                     id: currentProduct.id,
                     name: currentProduct.name,
                     price: currentProduct.price,
-                    url: window.location.href, // Snipcart requires this to prevent spoofing
+                    url: window.location.href,
                     description: currentProduct.desc,
                     image: currentProduct.img,
                     quantity: 1
@@ -309,7 +327,7 @@
                     closeModal();
                 }).catch((err) => {
                     console.error(err);
-                    alert("Error adding to cart. Are you running this on localhost or https?");
+                    alert("Failed to add item. Check console for details.");
                 });
             }
         });
