@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NIKE - Store</title>
+    <title>NIKE - Fixed Cart</title>
     
     <!-- STYLES -->
     <style>
@@ -41,47 +41,18 @@
         .nav-container { display: flex; justify-content: space-between; align-items: center; height: 100%; position: relative; }
         .nav-logo { font-family: 'Oswald', sans-serif; font-weight: 700; font-size: 24px; letter-spacing: -1px; z-index: 10; }
 
-        /* Nav Links */
         .nav-links { display: flex; gap: 30px; }
         .nav-link { font-weight: 500; font-size: 14px; color: var(--color-black); position: relative; }
         .nav-link::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: black; transition: width 0.3s; }
         .nav-link:hover::after, .nav-link.active::after { width: 100%; }
 
-        /* RIGHT SIDE WRAPPER (Search + Icons) */
-        .right-actions { 
-            display: flex; 
-            align-items: center; 
-            gap: 15px; 
-            z-index: 10; 
-        }
+        .right-actions { display: flex; align-items: center; gap: 15px; z-index: 10; }
 
-        /* SEARCH BAR STYLING */
-        .search-container { 
-            display: flex; 
-            align-items: center; 
-            overflow: hidden; 
-            width: 0; /* Hidden by default */
-            opacity: 0; 
-            transition: all 0.4s ease; 
-        }
+        /* SEARCH BAR */
+        .search-container { display: flex; align-items: center; overflow: hidden; width: 0; opacity: 0; transition: all 0.4s ease; }
+        .search-container.active { width: 250px; opacity: 1; margin-right: 10px; }
+        .search-input { width: 100%; padding: 8px 16px; border-radius: 20px; border: 1px solid #ccc; background: #f9f9f9; outline: none; }
 
-        /* Desktop: Search bar expands to the left of the icons */
-        .search-container.active { 
-            width: 250px; 
-            opacity: 1; 
-            margin-right: 10px; /* Space between input and cart icon */
-        }
-
-        .search-input { 
-            width: 100%; 
-            padding: 8px 16px; 
-            border-radius: 20px; 
-            border: 1px solid #ccc; 
-            background: #f9f9f9; 
-            outline: none;
-        }
-
-        /* Icons */
         .icon-btn { cursor: pointer; display: flex; align-items: center; justify-content: center; }
 
         /* --- VIEWS --- */
@@ -118,41 +89,22 @@
             .modal-content { flex-direction: column; height: 90vh; overflow-y: auto; }
             .modal-img { height: 40%; }
             .modal-details { padding: 30px; }
-            
-            /* Mobile Search Logic: Keep it centered because links are hidden */
             .right-actions { position: absolute; right: 0; }
-            .search-container { 
-                position: absolute; 
-                left: 50%; 
-                transform: translateX(-50%); 
-                width: 0;
-                opacity: 0;
-                margin-right: 0;
-            }
-            .search-container.active {
-                width: 70%; /* Full width on mobile */
-                opacity: 1;
-                /* Override desktop styles */
-                transform: translateX(-50%);
-                margin-right: 0;
-                left: 50%;
-                right: auto;
-            }
+            .search-container { position: absolute; left: 50%; transform: translateX(-50%); width: 0; opacity: 0; margin-right: 0; }
+            .search-container.active { width: 70%; opacity: 1; transform: translateX(-50%); margin-right: 0; left: 50%; right: auto; }
         }
     </style>
 </head>
 <body>
 
-    <!-- TOAST -->
     <div id="toast" class="toast">Added to Bag</div>
 
     <!-- HEADER -->
     <header id="mainHeader">
         <div class="container nav-container">
-            <div style="font-size: 24px; cursor: pointer;">&#9776;</div> <!-- Mobile Menu Icon -->
+            <div style="font-size: 24px; cursor: pointer;">&#9776;</div>
             <a href="#" onclick="goHome()" class="nav-logo">NIKE</a>
 
-            <!-- Navigation Links (Middle) -->
             <nav class="nav-links">
                 <a class="nav-link" onclick="filterProducts('new', this)">New & Featured</a>
                 <a class="nav-link" onclick="filterProducts('men', this)">Men</a>
@@ -161,20 +113,14 @@
                 <a class="nav-link text-orange" onclick="filterProducts('sale', this)">Sale</a>
             </nav>
 
-            <!-- Right Side: Search + Icons -->
             <div class="right-actions">
-                
-                <!-- Search Bar (Expands left on desktop) -->
                 <div class="search-container" id="searchContainer">
                     <input type="text" class="search-input" id="searchInput" placeholder="Search products...">
                 </div>
-
-                <!-- Search Toggle Button -->
                 <button class="icon-btn" onclick="toggleSearch()">
                     <svg width="24" height="24" stroke="currentColor" fill="none" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
                 </button>
-
-                <!-- Cart Icon (Snipcart Trigger) -->
+                <!-- CART BUTTON -->
                 <button class="icon-btn" onclick="openCart()">
                     <svg width="24" height="24" stroke="currentColor" fill="none" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
                 </button>
@@ -191,7 +137,6 @@
                 <button class="btn btn-dark" onclick="filterProducts('new')">Shop New</button>
             </div>
         </section>
-
         <section class="container" style="padding: 60px 0;">
             <h2 style="font-family: 'Oswald', sans-serif; font-size: 32px; margin-bottom: 30px;">Popular Right Now</h2>
             <div class="product-grid" id="homeGrid"></div>
@@ -222,10 +167,11 @@
         </div>
     </div>
 
-    <!-- SNIPCART SETUP -->
+    <!-- SNIPCART SCRIPT CONFIGURATION -->
+    <!-- 1. REPLACE 'YOUR_SNIPCART_PUBLIC_KEY_HERE' BELOW -->
     <script>
         window.SnipcartSettings = {
-            publicApiKey: 'YmZhZGExNjMtMjRkYS00MGViLTk2YjgtMzBlZjcxNWY5ZjVmNjM5MDQwNzAzMTc4MTU1MDg3',
+            publicApiKey: 'YOUR_SNIPCART_PUBLIC_KEY_HERE', 
             loadStrategy: 'manual',
             modalStyle: 'side'
         };
@@ -309,12 +255,19 @@
             }
         });
 
-        // --- CART & SNIPCART ---
+        // --- CART & SNIPCART (WITH ERROR CHECKS) ---
         function openCart() {
+            // CHECK 1: Did you replace the key?
+            if (window.SnipcartSettings.publicApiKey.includes('YOUR_SNIPCART_PUBLIC_KEY_HERE')) {
+                alert("ERROR: You forgot to paste your Snipcart API Key in the code! Look for line ~290.");
+                return;
+            }
+
+            // CHECK 2: Is Snipcart loaded?
             if (window.Snipcart && window.Snipcart.api) {
                 window.Snipcart.api.theme.cart.open();
             } else {
-                alert("Snipcart is loading... please wait a moment.");
+                alert("Snipcart is still loading or blocked. Wait a few seconds.");
             }
         }
 
@@ -334,20 +287,29 @@
         modal.addEventListener('click', (e) => { if(e.target === modal) closeModal(); });
 
         document.getElementById('addToBagBtn').addEventListener('click', () => {
-            showToast("Added " + currentProduct.name);
+            // CHECK 1: Key
+            if (window.SnipcartSettings.publicApiKey.includes('YOUR_SNIPCART_PUBLIC_KEY_HERE')) {
+                alert("Cannot add to cart: Missing API Key.");
+                return;
+            }
+
+            showToast("Adding " + currentProduct.name + "...");
             
             if (window.Snipcart && window.Snipcart.api) {
                 window.Snipcart.api.cart.items.add({
                     id: currentProduct.id,
                     name: currentProduct.name,
                     price: currentProduct.price,
-                    url: window.location.href,
+                    url: window.location.href, // Snipcart requires this to prevent spoofing
                     description: currentProduct.desc,
                     image: currentProduct.img,
                     quantity: 1
                 }).then(() => {
                     window.Snipcart.api.theme.cart.open();
                     closeModal();
+                }).catch((err) => {
+                    console.error(err);
+                    alert("Error adding to cart. Are you running this on localhost or https?");
                 });
             }
         });
