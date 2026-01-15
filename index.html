@@ -18,7 +18,12 @@
 <style>
 /* --- GENERAL --- */
 *{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:'Roboto',sans-serif;color:#333;overflow-x:hidden;}
+body{
+  font-family:'Roboto',sans-serif;
+  color:#111;
+  background:linear-gradient(135deg,#f5f5f5,#e0e0e0);
+  overflow-x:hidden;
+}
 
 /* --- HEADER --- */
 header{
@@ -29,25 +34,30 @@ header{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  padding:15px 30px;
-  background:rgba(0,0,0,0.7);
+  padding:20px 40px;
+  background:rgba(0,0,0,0.85);
   backdrop-filter:blur(10px);
+  box-shadow:0 2px 15px rgba(0,0,0,0.3);
 }
 header h1{
   font-family:'Montserrat',sans-serif;
-  color:#fff;
-  font-size:1.8em;
+  color:#ffdd57;
+  font-size:2em;
+  letter-spacing:1px;
 }
 nav a{
   color:white;
   text-decoration:none;
-  margin-left:20px;
-  font-weight:500;
-  transition:color 0.3s;
+  margin-left:25px;
+  font-weight:600;
+  transition:color 0.3s, transform 0.3s;
 }
-nav a:hover{ color:#ffdd57; }
+nav a:hover{
+  color:#ffdd57;
+  transform:scale(1.05);
+}
 
-/* --- HERO VIDEO SECTION --- */
+/* --- HERO SECTION --- */
 #hero{
   width:100%;
   height:90vh;
@@ -69,17 +79,22 @@ nav a:hover{ color:#ffdd57; }
   flex-direction:column;
   justify-content:center;
   align-items:center;
-  background:rgba(0,0,0,0.3);
+  background:rgba(0,0,0,0.35);
   color:#fff;
   text-align:center;
+  padding:20px;
 }
 #hero h2{
-  font-size:3em;
-  margin-bottom:20px;
+  font-size:3.5em;
   font-family:'Montserrat',sans-serif;
+  letter-spacing:2px;
+  text-shadow:2px 2px 10px rgba(0,0,0,0.5);
+  margin-bottom:20px;
 }
 #hero p{
-  font-size:1.2em;
+  font-size:1.3em;
+  color:#fff;
+  text-shadow:1px 1px 8px rgba(0,0,0,0.4);
 }
 
 /* --- SIDE MENU --- */
@@ -90,17 +105,29 @@ nav a:hover{ color:#ffdd57; }
   width:300px;
   height:100%;
   background:#fff;
-  padding:20px;
+  padding:25px;
   z-index:1001;
-  transition:left 0.4s;
+  transition:left 0.4s ease;
   overflow-y:auto;
 }
-#sideMenu h3{margin-bottom:20px;font-size:1.3em;}
-#sideMenu a{display:block;margin-bottom:15px;color:#111;text-decoration:none;font-weight:500;}
+#sideMenu h3{
+  font-weight:700;
+  margin-bottom:20px;
+  font-size:1.3em;
+  color:#111;
+}
+#sideMenu a{
+  display:block;
+  margin-bottom:15px;
+  color:#111;
+  text-decoration:none;
+  font-weight:500;
+  transition:color 0.3s;
+}
 #sideMenu a:hover{color:#ffdd57;}
 #overlay{
   position:fixed;
-  top:0;left:0;width:0;height:100%;
+  top:0; left:0; width:0; height:100%;
   background:rgba(0,0,0,0.5);
   z-index:1000;
   opacity:0;
@@ -112,45 +139,62 @@ nav a:hover{ color:#ffdd57; }
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
   gap:30px;
-  padding:60px 20px;
+  padding:100px 40px 60px;
 }
 .product{
-  background:#fff;
+  background:white;
   border-radius:15px;
   text-align:center;
   overflow:hidden;
   padding:15px;
   position:relative;
-  box-shadow:0 10px 30px rgba(0,0,0,0.15);
+  box-shadow:0 8px 25px rgba(0,0,0,0.15);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  min-height:500px;
+  transition:transform 0.4s, box-shadow 0.4s;
 }
-.product img{width:100%;height:220px;object-fit:cover;border-radius:10px;transition:transform 0.4s;}
+.product:hover{transform:translateY(-5px); box-shadow:0 12px 30px rgba(0,0,0,0.2);}
+.product img{
+  width:100%;
+  height:250px;
+  object-fit:cover;
+  border-radius:10px;
+  margin-bottom:15px;
+  transition:transform 0.4s;
+}
 .product:hover img{transform:scale(1.1);}
-.product h2{margin:10px 0;font-size:1.2em;}
+.product h2{font-size:1.3em;margin-bottom:10px;}
 .product p{font-size:0.95em;color:#555;margin-bottom:10px;}
-.product .price{font-weight:700;margin-bottom:10px;}
+.product .price{font-weight:700;font-size:1.1em;margin-bottom:15px;}
 .product button{
-  position:absolute;bottom:15px;left:50%;transform:translateX(-50%);
+  position:absolute;
+  bottom:20px;
+  left:50%;
+  transform:translateX(-50%);
   padding:10px 20px;
   background:#ffdd57;
   border:none;
   border-radius:5px;
-  cursor:pointer;
   font-weight:600;
+  cursor:pointer;
   opacity:0;
   transition:opacity 0.3s,transform 0.3s;
 }
-.product:hover button{opacity:1;transform:translateX(-50%) scale(1.05);}
+.product:hover button{opacity:1; transform:translateX(-50%) scale(1.05);}
 
 /* --- ABOUT & CONTACT --- */
 #about,#contact{
-  background:#f5f5f5;
+  background:#fff;
   padding:50px;
-  margin:30px 20px;
+  margin:30px 40px;
   border-radius:15px;
   text-align:center;
+  box-shadow:0 8px 25px rgba(0,0,0,0.1);
 }
-#about h2,#contact h2{margin-bottom:20px;font-size:2em;}
-#about p,#contact p{font-size:1.1em;color:#111;}
+#about h2,#contact h2{font-size:2em;margin-bottom:20px;color:#111;}
+#about p,#contact p{font-size:1.1em;color:#333;}
 
 /* --- FOOTER --- */
 footer{
@@ -162,9 +206,28 @@ footer{
 footer a{color:#ffdd57;margin:0 10px;text-decoration:none;}
 footer a:hover{text-decoration:underline;}
 
+/* --- CART BUTTON --- */
+#cart-btn{
+  position:fixed;
+  top:20px;
+  right:20px;
+  background:#ffdd57;
+  color:#111;
+  padding:10px 15px;
+  border-radius:50px;
+  cursor:pointer;
+  z-index:1002;
+  display:flex;
+  align-items:center;
+  gap:5px;
+  font-weight:700;
+  transition:background 0.3s,transform 0.3s;
+}
+#cart-btn:hover{background:#ffc107; transform:scale(1.05);}
+
 /* --- RESPONSIVE --- */
 @media(max-width:900px){.shop{grid-template-columns:repeat(2,1fr);}}
-@media(max-width:600px){.shop{grid-template-columns:1fr;}nav a{display:none;}}
+@media(max-width:600px){.shop{grid-template-columns:1fr;} nav a{display:none;}}
 </style>
 </head>
 <body>
@@ -182,7 +245,7 @@ footer a:hover{text-decoration:underline;}
 <!-- HEADER -->
 <header>
   <div id="menuBtn"><i class="fas fa-bars"></i></div>
-  <h1>Hakeem's Shop</h1>
+  <h1>Hakeem's Nike Shop</h1>
   <nav>
     <a href="#hero">Home</a>
     <a href="#shop">Shop</a>
@@ -202,40 +265,60 @@ footer a:hover{text-decoration:underline;}
     <source src="assets/hero.mp4" type="video/mp4">
   </video>
   <div class="hero-overlay">
-    <h2>Experience Nike Mind</h2>
-    <p>Premium products for your ultimate performance.</p>
+    <h2>Your Nike Mind Experience</h2>
+    <p>Premium products. Stylish performance. Secure shopping.</p>
   </div>
 </section>
 
 <!-- SHOP SECTION -->
 <section id="shop" class="shop">
+  <!-- Product 1 Placeholder -->
   <div class="product" data-category="shoes">
-    <img src="assets/img1.png" alt="Nike Mind Runner">
-    <h2>Nike Mind Runner</h2>
-    <p>Ultimate comfort and style for peak performance.</p>
+    <img src="assets/placeholder1.png" alt="Product 1">
+    <h2>Product 1</h2>
+    <p>Product description goes here.</p>
     <div class="price">$19.99</div>
     <button class="snipcart-add-item"
-      data-item-id="nike-mind-1"
+      data-item-id="product1"
       data-item-price="19.99"
       data-item-url="."
-      data-item-name="Nike Mind Runner"
-      data-item-description="Ultimate comfort and style for peak performance."
-      data-item-image="assets/img1.png">
+      data-item-name="Product 1"
+      data-item-description="Product description goes here."
+      data-item-image="assets/placeholder1.png">
       <i class="fas fa-shopping-cart"></i> Add to Cart
     </button>
   </div>
+
+  <!-- Product 2 Placeholder -->
   <div class="product" data-category="clothing">
-    <img src="assets/img2.png" alt="Nike Mind Air">
-    <h2>Nike Mind Air</h2>
-    <p>Lightweight, breathable, built for champions.</p>
+    <img src="assets/placeholder2.png" alt="Product 2">
+    <h2>Product 2</h2>
+    <p>Product description goes here.</p>
     <div class="price">$29.99</div>
     <button class="snipcart-add-item"
-      data-item-id="nike-mind-2"
+      data-item-id="product2"
       data-item-price="29.99"
       data-item-url="."
-      data-item-name="Nike Mind Air"
-      data-item-description="Lightweight, breathable, built for champions."
-      data-item-image="assets/img2.png">
+      data-item-name="Product 2"
+      data-item-description="Product description goes here."
+      data-item-image="assets/placeholder2.png">
+      <i class="fas fa-shopping-cart"></i> Add to Cart
+    </button>
+  </div>
+
+  <!-- Product 3 Placeholder -->
+  <div class="product" data-category="pants">
+    <img src="assets/placeholder3.png" alt="Product 3">
+    <h2>Product 3</h2>
+    <p>Product description goes here.</p>
+    <div class="price">$39.99</div>
+    <button class="snipcart-add-item"
+      data-item-id="product3"
+      data-item-price="39.99"
+      data-item-url="."
+      data-item-name="Product 3"
+      data-item-description="Product description goes here."
+      data-item-image="assets/placeholder3.png">
       <i class="fas fa-shopping-cart"></i> Add to Cart
     </button>
   </div>
@@ -252,7 +335,7 @@ footer a:hover{text-decoration:underline;}
   <h2>Contact Us</h2>
   <p>Email: support@hakeemshop.com</p>
   <p>Phone: +27 123 456 789</p>
-  <p>Follow us on social media for updates.</p>
+  <p>Follow us on social media for updates and promotions.</p>
 </section>
 
 <!-- FOOTER -->
